@@ -38,12 +38,12 @@
         <button class="btn btn-primary" type="submit">Sign Up</button>
     </form>
 
-    <a href="{{ route('login') }}">
-        <button class="btn btn-outline">Sign In</button>
-    </a>
+    
 
     <div class="divider"><span>or</span></div>
 
-    <button class="btn btn-outline">Sign In</button>
+    <a href="{{ route('login') }}">
+        <button class="btn btn-outline">Sign In</button>
+    </a>
 </body>
 </html>
