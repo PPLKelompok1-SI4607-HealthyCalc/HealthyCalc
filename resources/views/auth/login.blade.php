@@ -39,12 +39,12 @@
 <body>
     <div class="container">
         <div class="form-section">
+            <h2>Sign In</h2>
             <p>Welcome back!</p>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <input type="email" name="email" placeholder="Enter your email" required>
                 <input type="password" name="password" placeholder="Enter your password" required>
-                <button class="btn" type="submit">Sign In</button>
             </form>
             <div class="or-divider"><span>or</span></div>
             <button class="btn btn-outline">Sign In</button>
