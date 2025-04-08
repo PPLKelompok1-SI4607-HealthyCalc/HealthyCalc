@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign In</title>
-    <link href="Logo 1.png" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
         body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
@@ -40,7 +40,7 @@
             <button class="btn btn-outline">Sign In</button>
         </div>
         <div class="image-section">
-            <img src="{{ asset('images/calc_icon.png') }}" alt="Calculator Icon">
+            <img src="{{ asset('Logo 1.png') }}" alt="Calculator Icon">
         </div>
     </div>
 </body>
