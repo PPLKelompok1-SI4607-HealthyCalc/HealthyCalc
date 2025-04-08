@@ -39,7 +39,6 @@
 <body>
     <div class="container">
         <div class="form-section">
-            <h2>Sign In</h2>
             <p>Welcome back!</p>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -48,6 +47,7 @@
                 <button class="btn" type="submit">Sign In</button>
             </form>
             <div class="or-divider"><span>or</span></div>
+            <button class="btn btn-outline">Sign In</button>
         </div>
         <div class="image-section">
             <img src="{{ asset('Logo 1.png') }}" alt="Calculator Icon">
