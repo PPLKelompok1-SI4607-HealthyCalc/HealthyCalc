@@ -48,7 +48,7 @@
                 <button class="btn" type="submit">Sign In</button>
             </form>
             <div class="or-divider"><span>or</span></div>
-            <button class="btn btn-outline">Sign In</button>
+            <button class="btn btn-outline">Sign Up</button>
         </div>
         <div class="image-section">
             <img src="{{ asset('Logo 1.png') }}" alt="Calculator Icon">
