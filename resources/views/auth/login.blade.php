@@ -21,8 +21,19 @@
         .or-divider::before { left: 0; }
         .or-divider::after { right: 0; }
         .or-divider span { background: #fff; padding: 0 10px; position: relative; z-index: 1; color: #777; }
-        .image-section { flex: 1; background: #8AA88B; display: flex; justify-content: center; align-items: center; }
-        .image-section img { max-width: 300px; }
+
+        /* Perubahan di bawah ini */
+        .image-section {
+            flex: 1;
+            background: transparent; /* <-- ini diubah dari #8AA88B jadi transparent */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-section img {
+            max-width: 300px;
+        }
     </style>
 </head>
 <body>
