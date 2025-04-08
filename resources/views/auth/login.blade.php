@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign In</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <link href="Logo 1.png" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
         body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
