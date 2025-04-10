@@ -4,3 +4,5 @@ print("akuugemoy")
 print("HM")
 print("haii")
 print("fidelasr")
+
+a= 3
