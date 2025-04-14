@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name('dashboard.food_chart');
+Route::get('/dashboard/food-chart',[FoodChartController::class, 'index'])->name('dashboard.food_chart');
     
