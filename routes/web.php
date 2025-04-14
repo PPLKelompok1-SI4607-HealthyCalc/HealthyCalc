@@ -15,3 +15,4 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/dashboard', [NutritionSummaryController::class, 'index'])->name('dashboard');
 
 Route::get('/dashboard/weight-progress', [WeightProgressController::class, 'index'])->name('dashboard.weight_progress');
+Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name('dashboard.food_chart');
