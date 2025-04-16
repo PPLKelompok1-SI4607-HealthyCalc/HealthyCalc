@@ -29,7 +29,6 @@
                         <p class="fs-4 mb-1">{{ $value['consumed'] }} / {{ $value['target'] }}</p>
                         <div class="progress" style="height: 10px;">
                             <div class="progress-bar bg-success" role="progressbar"
-                                 style="width: {{ $percentage }}%"
                                  aria-valuenow="{{ $value['consumed'] }}"
                                  aria-valuemin="0"
                                  aria-valuemax="{{ $value['target'] }}">
