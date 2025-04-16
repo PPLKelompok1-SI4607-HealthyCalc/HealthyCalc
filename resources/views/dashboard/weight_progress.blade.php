@@ -1,5 +1,5 @@
 @extends('layouts.app') 
- 
+
 @section('content') 
 <div class="container py-5"> 
     <h2 class="text-center mb-4 fw-bold">Progress Berat Badan</h2> 
@@ -24,7 +24,7 @@
             borderColor: '#008759', 
             backgroundColor: 'rgba(0, 137, 89, 0.2)', 
             fill: true, 
-            tension: 0.4, 
+            tension: 0.5, 
             pointRadius: 5, 
             pointBackgroundColor: '#008759' 
         }] 
