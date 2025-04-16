@@ -24,7 +24,7 @@
             borderColor: '#008759', 
             backgroundColor: 'rgba(0, 137, 89, 0.2)', 
             fill: true, 
-            tension: 0.5, 
+            tension: 0.4, 
             pointRadius: 5, 
             pointBackgroundColor: '#008759' 
         }] 
