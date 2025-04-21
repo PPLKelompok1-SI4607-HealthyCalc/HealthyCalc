@@ -12,7 +12,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="card shadow-sm rounded-4">
                         <img src="{{ asset('storage/'.$recipe->image) }}" class="card-img-top" alt="{{ $recipe->name }}">
-                        <div class="card-body">
+                        <div class="card-b`ody">
                             <h5 class="card-title">{{ $recipe->name }}</h5>
                             <p class="card-text">{{ Str::limit($recipe->description, 100) }}</p>
                             <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary">Lihat Resep</a>
