@@ -20,6 +20,7 @@ class RegisterController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
+        
 
         // Simpan data user ke database, contoh:
         // User::create([...]);
