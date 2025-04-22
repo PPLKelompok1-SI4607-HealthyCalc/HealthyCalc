@@ -57,7 +57,6 @@
             }
         }
     };
-
     new Chart(ctx, config);
 </script>
 @endsection

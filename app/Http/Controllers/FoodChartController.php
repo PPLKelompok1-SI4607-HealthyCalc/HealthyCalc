@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class FoodChartController extends Controller
 {
     public function index() { 
         $data = DB::table('food_logs') 

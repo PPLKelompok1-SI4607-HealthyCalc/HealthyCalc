@@ -5,6 +5,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NutritionSummaryController;
 use App\Http\Controllers\WeightProgressController;
+use App\Http\Controllers\FoodChartController;
+use App\Http\Controllers\FoodLogController;
+
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -17,3 +20,6 @@ Route::get('/dashboard', [NutritionSummaryController::class, 'index'])->name('da
 
 Route::get('/dashboard/weight-progress', [WeightProgressController::class, 'index'])->name('dashboard.weight_progress');
 Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name('dashboard.food_chart');
+
+Route::get('/food-log/create', [FoodLogController::class, 'create'])->name('food_log.create');
+Route::post('/food-log', [FoodLogController::class, 'store'])->name('food_log.store');
