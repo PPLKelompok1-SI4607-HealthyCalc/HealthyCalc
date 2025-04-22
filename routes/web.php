@@ -5,3 +5,7 @@ use App\Http\Controllers\RegisterController; // ← ini yang kurang
 
 Route::get('/register', [RegisterController::class, 'show'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
+
+use App\Http\Controllers\KaloriNutrisiController;
+
+Route::get('/kalori-nutrisi/create', [KaloriNutrisiController::class, 'create'])->name('kalori-nutrisi.create');
