@@ -1,5 +1,5 @@
 @extends('layouts.app') 
- 
+
 @section('content') 
 <div class="container py-5"> 
     <h2 class="text-center mb-4 fw-bold">Progress Berat Badan</h2> 
