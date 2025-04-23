@@ -21,5 +21,5 @@ Route::get('/dashboard/weight-progress', [WeightProgressController::class, 'inde
 Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name('dashboard.food_chart');
 
 Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
-Route::post('/profile/store', [ProfileController::class, 'store'])->name('profile.store');
+
 

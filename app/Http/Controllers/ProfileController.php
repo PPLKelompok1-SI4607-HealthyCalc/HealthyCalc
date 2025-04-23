@@ -8,32 +8,46 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    // Menampilkan form create profile
     public function create()
     {
-        return view('profile.profile_create');
+        $user = Auth::user();
+        return view('profile.profile_create', compact('user'));
     }
 
+    // Menyimpan data profile ke database
     public function store(Request $request)
     {
         $request->validate([
-            'age' => 'required|integer',
+            'age' => 'required|numeric',
             'height' => 'required|numeric',
             'weight' => 'required|numeric',
-            'gender' => 'required',
+            'gender' => 'required|in:male,female',
             'activity_level' => 'required',
             'diet_preferences' => 'nullable|array',
+            'photo' => 'nullable|image|max:2048'
         ]);
 
-        $profile = UserProfile::create([
-            'user_id' => Auth::id(),
-            'age' => $request->age,
-            'height' => $request->height,
-            'weight' => $request->weight,
-            'gender' => $request->gender,
-            'activity_level' => $request->activity_level,
-            'diet_preferences' => $request->diet_preferences,
+        $user = Auth::user();
+
+        $data = $request->only([
+            'age',
+            'height',
+            'weight',
+            'gender',
+            'activity_level',
+            'diet_preferences'
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Profil berhasil disimpan');
+        $data['user_id'] = $user->id;
+
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('profile_photos', 'public');
+        }
+
+        UserProfile::create($data);
+
+        return redirect()->route('dashboard')->with('success', 'Profil berhasil disimpan!');
+
     }
 }
