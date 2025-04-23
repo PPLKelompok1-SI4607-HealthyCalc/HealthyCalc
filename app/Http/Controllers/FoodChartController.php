@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class RegisterController extends Controller
+
+class FoodChartController extends Controller
 {
     public function index() { 
         $data = DB::table('food_logs') 
@@ -17,4 +19,4 @@ class RegisterController extends Controller
      
         return view('dashboard.food_chart', compact('data')); 
     } 
-};
+}
