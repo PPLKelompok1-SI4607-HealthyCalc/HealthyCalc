@@ -48,5 +48,6 @@ class ProfileController extends Controller
         UserProfile::create($data);
 
         return redirect()->route('dashboard')->with('success', 'Profil berhasil disimpan!');
+
     }
 }
