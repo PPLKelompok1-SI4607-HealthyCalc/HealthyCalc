@@ -5,7 +5,7 @@
     <h2 class="mb-4">Daftar Resep Makanan Sehat</h2>
 
     @if($recipes->isEmpty())
-        <p class="text-center">Belum ada resep yang ditambahkan.</p>
+        <p class="text-center">Belum ada resep yang ditambah.</p>
     @else
         <div class="row">
             @foreach ($recipes as $recipe)
