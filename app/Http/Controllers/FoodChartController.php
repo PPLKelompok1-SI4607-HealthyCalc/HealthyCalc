@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FoodChartController extends Controller
 {
@@ -17,4 +18,4 @@ class FoodChartController extends Controller
      
         return view('dashboard.food_chart', compact('data')); 
     } 
-};
+}
