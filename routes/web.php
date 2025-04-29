@@ -25,14 +25,12 @@ Route::get('/dashboard/weight-progress', [WeightProgressController::class, 'inde
 Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
 Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create');
 Route::post('/recipes', [RecipeController::class, 'store'])->name('recipes.store');
+Route::get('/recipes/{id}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
+Route::post('/recipes/{id}', [RecipeController::class, 'update'])->name('recipes.update');
+Route::post('/recipes/{id}/delete', [RecipeController::class, 'destroy'])->name('recipes.destroy');
+
 
 Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name('dashboard.food_chart');
-
-
-Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
-Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create');
-Route::post('/recipes', [RecipeController::class, 'store'])->name('recipes.store');
-
 Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name('dashboard.food_chart');
 
 Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
