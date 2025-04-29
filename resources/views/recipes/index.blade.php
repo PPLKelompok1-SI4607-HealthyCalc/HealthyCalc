@@ -27,7 +27,7 @@
         <button class="bg-green-100 text-green-800 px-4 py-1 rounded-full text-sm hover:bg-green-200">Semua</button>
         <button class="bg-gray-100 px-4 py-1 rounded-full text-sm hover:bg-green-100">Diet</button>
         <button class="bg-gray-100 px-4 py-1 rounded-full text-sm hover:bg-green-100">Tinggi Protein</button>
-        <button class="bg-gray-100 px-4 py-1 rounded-full text-sm hover:bg-green-100">Rendah Kalori</button>
+        <button class="bg-gray-100 px-4 py-1 rounded-full text-sm hover:bg-green-100">Less Calory</button>
         <button class="bg-gray-100 px-4 py-1 rounded-full text-sm hover:bg-green-100">Vegetarian</button>
     </div>
 
