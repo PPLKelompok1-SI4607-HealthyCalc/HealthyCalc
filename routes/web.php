@@ -17,7 +17,6 @@ Route::get('/dashboard', [NutritionSummaryController::class, 'index'])->name('da
 
 Route::get('/dashboard/weight-progress', [WeightProgressController::class, 'index'])->name('dashboard.weight_progress');
 use App\Http\Controllers\KaloriNutrisiController;
-
 Route::get('/kalori', [KaloriController::class, 'index'])->name('kalori.index');
 Route::post('/kalori/hitung', [KaloriController::class, 'hitung'])->name('kalori.hitung');
 Route::get('/kalori/edit', [KaloriController::class, 'edit'])->name('kalori.edit');
