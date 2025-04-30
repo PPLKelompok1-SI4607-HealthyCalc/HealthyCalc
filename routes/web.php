@@ -18,8 +18,22 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/dashboard', [NutritionSummaryController::class, 'index'])->name('dashboard');
 
 Route::get('/dashboard/weight-progress', [WeightProgressController::class, 'index'])->name('dashboard.weight_progress');
-Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name('dashboard.food_chart');
 
-Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
+Route::middleware(['web'])->group(function () {
+    // Profile Management Routes
+    Route::prefix('profile')->group(function () {
+        Route::get('/create', [ProfileController::class, 'create'])->name('profile.create');
+        Route::post('/', [ProfileController::class, 'store'])->name('profile.store');
+        Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+});
+
+
+
+
+
 
 
