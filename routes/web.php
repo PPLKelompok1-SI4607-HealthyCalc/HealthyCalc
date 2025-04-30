@@ -6,7 +6,17 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NutritionSummaryController;
 use App\Http\Controllers\WeightProgressController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FoodIntakeController;
 
+Route::resource('food-intakes', FoodIntakeController::class);
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/', function () {
+    return redirect()->route('food-intakes.index');
+});
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
