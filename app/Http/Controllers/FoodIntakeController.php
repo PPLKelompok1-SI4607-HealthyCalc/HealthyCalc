@@ -116,7 +116,7 @@ class FoodIntakeController extends Controller
         session(['food_intakes' => $intakes]);
 
         return redirect()->route('food-intakes.index')
-            ->with('success', 'Makanan berhasil ditambahkan!');
+            ->with('success', 'Makanan berhasil ditambahkan^^');
     }
 
     public function edit($id)
