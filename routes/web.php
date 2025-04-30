@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardAnalysisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard/food-chart',[FoodChartController::class, 'index'])->name('dashboard.food_chart');
-    
+
+Route::get('/dashboard/analysis', [DashboardAnalysisController::class, 'index'])->name('dashboard.analysis');
+Route::post('/dashboard/analysis/update', [DashboardAnalysisController::class, 'update'])->name('dashboard.analysis.update');
