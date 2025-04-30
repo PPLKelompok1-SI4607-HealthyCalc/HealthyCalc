@@ -46,7 +46,7 @@
                         <a class="nav-link" href="#">Dashboard Analysis</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Recipes</a>
+                        <a class="nav-link" href="#">Resep</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Supplements</a>
