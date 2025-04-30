@@ -8,12 +8,12 @@ class FoodIntakeController extends Controller
 {
     public function index()
     {
-        // Initialize with dummy data if empty
+
         if (!session()->has('food_intakes')) {
             $dummyData = [
                 [
                     'id' => 'dummy1',
-                    'food_name' => 'Nasi Goreng',
+                    'food_name' => 'Nasi Ayam Geprek',
                     'calories' => 450,
                     'protein' => 10,
                     'carbs' => 60,
@@ -25,7 +25,7 @@ class FoodIntakeController extends Controller
                 ],
                 [
                     'id' => 'dummy2',
-                    'food_name' => 'Ayam Bakar',
+                    'food_name' => 'Ayam Bakar Padang',
                     'calories' => 650,
                     'protein' => 30,
                     'carbs' => 5,
@@ -40,20 +40,17 @@ class FoodIntakeController extends Controller
         }
 
         $intakes = session('food_intakes', []);
-        
-        // Calculate totals
+    
         $totalCalories = array_sum(array_column($intakes, 'calories'));
         $totalProtein = array_sum(array_column($intakes, 'protein'));
         $totalCarbs = array_sum(array_column($intakes, 'carbs'));
         $totalFat = array_sum(array_column($intakes, 'fat'));
-        
-        // Daily targets
+
         $targetCalories = 2000;
         $targetProtein = 60;
         $targetCarbs = 300;
         $targetFat = 85;
-        
-        // Group by meal time
+
         $groupedIntakes = [];
         foreach ($intakes as $intake) {
             $mealTime = $intake['meal_time'];
