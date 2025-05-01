@@ -4,111 +4,161 @@ namespace App\Http\Controllers;
 
 use App\Models\FoodLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class FoodLogController extends Controller
 {
-    public function index()
+    /**
+     * Tampilkan semua log makanan dengan filter waktu
+     */
+    public function index(Request $request)
     {
-        // Calculate daily totals from all food logs
-        $totalCalories = FoodLog::all()->sum('calories');
-        $totalProtein = FoodLog::all()->sum('protein');
-        $totalCarbs = FoodLog::all()->sum('carbs');
-        $totalFat = FoodLog::all()->sum('fat');
+        try {
+            $filter = $request->query('filter', 'harian'); // Default: harian
+            $query = FoodLog::query();
 
-        // Data intake harian
-        $intake = (object)[
-            'calories' => $totalCalories,
-            'protein' => $totalProtein,
-            'carbs' => $totalCarbs,
-            'fat' => $totalFat,
-        ];
+            // Tentukan rentang tanggal berdasarkan filter
+            switch ($filter) {
+                case 'mingguan':
+                    $start = Carbon::now()->startOfWeek();
+                    $end = Carbon::now()->endOfWeek();
+                    break;
 
-        // Target yang ingin dicapai
-        $target = (object)[
-            'calories' => 2000,
-            'protein' => 80,
-            'carbs' => 300,
-            'fat' => 55,
-        ];
+                case 'bulankalender':
+                    $start = Carbon::now()->startOfMonth();
+                    $end = Carbon::now()->endOfMonth();
+                    break;
 
-        // Get all food logs sorted by consumed_at
-        $foodLogs = FoodLog::all()->sortByDesc('consumed_at');
+                case '30hari':
+                    $start = Carbon::now()->subDays(29)->startOfDay(); // termasuk hari ini
+                    $end = Carbon::now()->endOfDay();
+                    break;
 
-        // Pagination manual
-        $perPage = 10;
-        $currentPage = request()->get('page', 1);
-        $paginatedFoodLogs = $foodLogs->forPage($currentPage, $perPage);
-        $total = $foodLogs->count();
-        $totalPages = ceil($total / $perPage);
+                case 'harian':
+                default:
+                    $start = Carbon::today();
+                    $end = Carbon::today()->endOfDay();
+                    break;
+            }
 
-        return view('food_log.index', compact('intake', 'target', 'paginatedFoodLogs', 'totalPages', 'currentPage'));
+            $query->whereBetween('consumed_at', [$start, $end]);
+
+            $foodLogs = $query->orderByDesc('consumed_at')->paginate(10);
+
+            // Hitung total asupan
+            $intake = (object)[
+                'calories' => $foodLogs->sum('calories'),
+                'protein'  => $foodLogs->sum('protein'),
+                'carbs'    => $foodLogs->sum('carbs'),
+                'fat'      => $foodLogs->sum('fat'),
+            ];
+
+            // Target default (bisa kamu ubah jika pakai user profile)
+            $target = (object)[
+                'calories' => 2000,
+                'protein'  => 80,
+                'carbs'    => 300,
+                'fat'      => 55,
+            ];
+
+            return view('food_log.index', compact('intake', 'target', 'foodLogs', 'filter'));
+        } catch (\Exception $e) {
+            Log::error('Gagal menampilkan riwayat makanan: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat memuat data makanan.');
+        }
     }
 
+    /**
+     * Tampilkan form tambah makanan
+     */
     public function create()
     {
         return view('food_log.create');
     }
 
+    /**
+     * Simpan makanan baru
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'food_name' => 'required|string|max:255',
-            'portion' => 'required|string|max:100',
-            'calories' => 'required|numeric',
-            'protein' => 'required|numeric',
-            'carbs' => 'required|numeric',
-            'fat' => 'required|numeric',
-            'consumed_at' => 'required|date',
-        ]);
+        try {
+            $validated = $request->validate([
+                'food_name'   => 'required|string|max:255',
+                'portion'     => 'required|string|max:100',
+                'calories'    => 'required|numeric|min:0',
+                'protein'     => 'required|numeric|min:0',
+                'carbs'       => 'required|numeric|min:0',
+                'fat'         => 'required|numeric|min:0',
+                'consumed_at' => 'required|date',
+            ]);
 
-        FoodLog::create([
-            'food_name' => $request->food_name,
-            'portion' => $request->portion,
-            'calories' => $request->calories,
-            'protein' => $request->protein,
-            'carbs' => $request->carbs,
-            'fat' => $request->fat,
-            'consumed_at' => $request->consumed_at,
-        ]);
+            FoodLog::create($validated);
 
-        return redirect()->route('food_log.index')->with('success', 'Makanan berhasil ditambahkan!');
-    }
-
-    public function edit($index)
-    {
-        $foodLog = FoodLog::find($index);
-        return view('food_log.edit', compact('foodLog', 'index'));
-    }
-
-    public function update(Request $request, $index)
-    {
-        $request->validate([
-            'food_name' => 'required|string|max:255',
-            'portion' => 'required|string|max:100',
-            'calories' => 'required|numeric',
-            'protein' => 'required|numeric',
-            'carbs' => 'required|numeric',
-            'fat' => 'required|numeric',
-            'consumed_at' => 'required|date',
-        ]);
-
-        $foodLog = FoodLog::find($index);
-        if ($foodLog) {
-            $foodLog->food_name = $request->food_name;
-            $foodLog->portion = $request->portion;
-            $foodLog->calories = $request->calories;
-            $foodLog->protein = $request->protein;
-            $foodLog->carbs = $request->carbs;
-            $foodLog->fat = $request->fat;
-            $foodLog->consumed_at = $request->consumed_at;
+            return redirect()->route('food_log.index')->with('success', 'Makanan berhasil ditambahkan!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            Log::error('Gagal menyimpan makanan: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat menambahkan makanan.')->withInput();
         }
-
-        return redirect()->route('food_log.index')->with('success', 'Makanan berhasil diperbarui!');
     }
 
-    public function destroy($index)
+    /**
+     * Tampilkan form edit makanan
+     */
+    public function edit($id)
     {
-        FoodLog::delete($index);
-        return redirect()->route('food_log.index')->with('success', 'Makanan berhasil dihapus!');
+        try {
+            $foodLog = FoodLog::findOrFail($id);
+            return view('food_log.edit', compact('foodLog'));
+        } catch (\Exception $e) {
+            Log::error('Gagal memuat data untuk edit: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat memuat data.');
+        }
+    }
+
+    /**
+     * Update makanan
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $validated = $request->validate([
+                'food_name'   => 'required|string|max:255',
+                'portion'     => 'required|string|max:100',
+                'calories'    => 'required|numeric|min:0',
+                'protein'     => 'required|numeric|min:0',
+                'carbs'       => 'required|numeric|min:0',
+                'fat'         => 'required|numeric|min:0',
+                'consumed_at' => 'required|date',
+            ]);
+
+            $foodLog = FoodLog::findOrFail($id);
+            $foodLog->update($validated);
+
+            return redirect()->route('food_log.index')->with('success', 'Data makanan berhasil diperbarui!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            Log::error('Gagal memperbarui makanan: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui makanan.')->withInput();
+        }
+    }
+
+    /**
+     * Hapus makanan
+     */
+    public function destroy($id)
+    {
+        try {
+            $foodLog = FoodLog::findOrFail($id);
+            $foodLog->delete();
+
+            return redirect()->route('food_log.index')->with('success', 'Makanan berhasil dihapus!');
+        } catch (\Exception $e) {
+            Log::error('Gagal menghapus makanan: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat menghapus makanan.');
+        }
     }
 }
