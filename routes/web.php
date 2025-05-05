@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardAnalysisController;
+use App\Http\Controllers\SimulasiDefisitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/dashboard/analysis', [DashboardAnalysisController::class, 'index'])->name('dashboard.analysis');
-Route::post('/dashboard/analysis/update', [DashboardAnalysisController::class, 'update'])->name('dashboard.analysis.update');
+Route::resource('simulasi-defisit', SimulasiDefisitController::class);
