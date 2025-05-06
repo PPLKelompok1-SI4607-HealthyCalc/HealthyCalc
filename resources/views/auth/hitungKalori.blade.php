@@ -105,6 +105,21 @@
             color: green;
             margin-bottom: 15px;
         }
+        /* Radio button styling */
+        .radio-group {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        .radio-option label {
+            margin-left: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -130,13 +145,15 @@
                     
                     <div class="form-group">
                         <label>Jenis Kelamin:</label>
-                        <div>
-                            <input type="radio" id="laki" name="jenis_kelamin" value="laki" required>
-                            <label for="laki" style="display: inline;">Laki-laki</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan">
-                            <label for="perempuan" style="display: inline;">Perempuan</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="laki" name="jenis_kelamin" value="laki" required>
+                                <label for="laki">Laki-laki</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan">
+                                <label for="perempuan">Perempuan</label>
+                            </div>
                         </div>
                     </div>
                     
@@ -192,15 +209,20 @@
                     
                     <div class="form-group">
                         <label>Jenis Kelamin:</label>
-                        <div>
-                            <input type="radio" id="laki" name="jenis_kelamin" value="laki" 
-                                {{ $data['jenis_kelamin'] == 'laki' ? 'checked' : '' }} required>
-                            <label for="laki" style="display: inline;">Laki-laki</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="laki" name="jenis_kelamin" value="laki" 
+                                    {{ $data['jenis_kelamin'] == 'laki' ? 'checked' : '' }} required>
+                                <label for="laki">Laki-laki</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan"
+                                    {{ $data['jenis_kelamin'] == 'perempuan' ? 'checked' : '' }}>
+                                <label for="perempuan">Perempuan</label>
+                            </div>
                         </div>
-                        <div>
-                            <input type="radio" id="perempuan" name="jenis_kelamin" value="perempuan"
-                                {{ $data['jenis_kelamin'] == 'perempuan' ? 'checked' : '' }}>
-                            <label for="perempuan" style="display: inline;">Perempuan</label>
+                        <div class="current-value">Nilai saat ini: 
+                            {{ $data['jenis_kelamin'] == 'laki' ? 'Laki-laki' : 'Perempuan' }}
                         </div>
                     </div>
                     
