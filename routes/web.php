@@ -80,6 +80,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kalori/edit', [KaloriController::class, 'edit'])->name('kalori.edit');
     Route::get('/kalori/reset', [KaloriController::class, 'reset'])->name('kalori.reset');
     Route::post('/kalori/store', [KaloriController::class, 'store'])->name('kalori.store');
+    Route::put('/kalori/update', [KaloriController::class, 'update'])->name('kalori.update');
+    Route::get('/kalori/result', [KaloriController::class, 'result'])->name('kalori.result');
 
     // Rute Simulasi Defisit Kalori
     Route::resource('simulasi-defisit', SimulasiDefisitController::class);

@@ -63,6 +63,15 @@
                         {{ $recipe->waktu_masak }}
                     </span>
                 </div>
+                <div class="recipe-card">
+                    <h2>{{ $recipe->nama_resep }}</h2>
+                    <p>Kalori: {{ $recipe->kalori }}</p>
+                    <p>Waktu Masak: {{ $recipe->waktu_masak }} menit</p>
+                    <p>Tag Nutrisi: {{ $recipe->tag_nutrisi }}</p>
+                    @if ($recipe->image_path)
+                        <img src="{{ asset('storage/' . $recipe->image_path) }}" alt="{{ $recipe->nama_resep }}" class="recipe-image">
+                    @endif
+                </div>
                 <div class="flex mt-4 justify-end space-x-2">
                     <a href="{{ route('recipes.edit', $recipe->id) }}" class="text-blue-600 hover:text-blue-800">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

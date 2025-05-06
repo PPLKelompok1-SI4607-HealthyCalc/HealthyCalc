@@ -5,13 +5,13 @@ namespace Tests\Browser;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class DeleteFoodLogTest extends DuskTestCase
+class CancelDeleteFoodLogTest extends DuskTestCase
 {
     /**
-     * Test menghapus data riwayat konsumsi gizi.
-     * @group deletefood
+     * Test membatalkan penghapusan data riwayat konsumsi gizi.
+     * @group canceldeletefood
      */
-    public function testDeleteFoodLog()
+    public function testCancelDeleteFoodLog()
     {
         $this->browse(function (Browser $browser) {
             // Login terlebih dahulu
@@ -23,13 +23,13 @@ class DeleteFoodLogTest extends DuskTestCase
 
                 // Kunjungi halaman riwayat konsumsi gizi
                 ->visit('/riwayat-konsumsi-gizi') // Kunjungi halaman riwayat konsumsi gizi
-                ->assertSee('Nasi Kuning') // Pastikan data "Nasi Kuning" terlihat
-                ->waitFor('button[data-id="2"]', 5)
-                ->click('button[data-id="2"]')
+                ->assertSee('Bubur') // Pastikan data "Nasi Kuning" terlihat
+                ->waitFor('button[data-id="3"]', 5) // Tunggu tombol hapus muncul
+                ->click('button[data-id="3"]') // Klik tombol hapus
                 ->waitForDialog(5) // Tunggu dialog konfirmasi muncul
-                ->acceptDialog() // Klik tombol "OK" pada dialog konfirmasi
-                ->pause(1000) // Tunggu sejenak untuk memastikan data terhapus
-                ->assertDontSee('Nasi Kuning'); // Pastikan data "Nasi Kuning" tidak lagi terlihat
+                ->dismissDialog() // Klik tombol "Cancel" pada dialog konfirmasi
+                ->pause(1000) // Tunggu sejenak untuk memastikan dialog tertutup
+                ->assertSee('Bubur'); // Pastikan data "Nasi Kuning" masih terlihat
         });
     }
 }

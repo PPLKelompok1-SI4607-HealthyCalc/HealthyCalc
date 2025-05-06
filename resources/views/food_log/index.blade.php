@@ -72,7 +72,9 @@
                     <form action="{{ route('food_log.destroy', $log->id) }}" method="POST" onsubmit="return confirm('Hapus makanan ini?')" class="inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-red-500 hover:text-red-600 text-sm"><i class="bi bi-trash-fill mr-1"></i>Hapus</button>
+                        <button type="submit" class="text-red-500 hover:text-red-600 text-sm btn-delete" data-id="{{ $log->id }}">
+                            <i class="bi bi-trash-fill mr-1"></i>Hapus
+                        </button>
                     </form>
                 </div>
             </div>

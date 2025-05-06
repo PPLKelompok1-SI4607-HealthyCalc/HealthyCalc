@@ -9,13 +9,13 @@ class SimulasiDefisit extends Model
 {
     use HasFactory;
 
-    protected $table = 'simulasi-defisit';
+    protected $table = 'simulasi_defisit'; // Nama tabel di database
 
     protected $fillable = [
+        'user_id',
         'target_berat',
         'durasi',
         'tingkat_aktivitas',
-        'kebutuhan_kalori',
-        'rekomendasi_aktivitas',
+        'kebutuhan_kalori', // Tambahkan kebutuhan_kalori di sini
     ];
 }

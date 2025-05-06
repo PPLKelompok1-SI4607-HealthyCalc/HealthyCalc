@@ -20,22 +20,20 @@
 
     <form action="{{ route('simulasi-defisit.store') }}" method="POST" class="space-y-4">
         @csrf
-        <div>
-            <label for="target_berat" class="block text-sm font-medium text-gray-700">Target Berat (kg):</label>
-            <input type="number" name="target_berat" id="target_berat" required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500">
+        <div class="mb-4">
+            <label for="target_berat" class="block text-sm font-medium text-gray-700">Target Berat (kg)</label>
+            <input type="number" name="target_berat" id="target_berat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
-        <div>
-            <label for="durasi" class="block text-sm font-medium text-gray-700">Durasi (hari):</label>
-            <input type="number" name="durasi" id="durasi" required
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500">
+        <div class="mb-4">
+            <label for="durasi" class="block text-sm font-medium text-gray-700">Durasi (hari)</label>
+            <input type="number" name="durasi" id="durasi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
         </div>
 
-        <div>
+        <div class="mb-4">
             <label for="tingkat_aktivitas" class="block text-sm font-medium text-gray-700">Tingkat Aktivitas:</label>
             <select name="tingkat_aktivitas" id="tingkat_aktivitas"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500">
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-green-500 focus:border-green-500" required>
                 <option value="rendah">Rendah</option>
                 <option value="sedang">Sedang</option>
                 <option value="tinggi">Tinggi</option>

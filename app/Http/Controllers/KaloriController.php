@@ -106,6 +106,87 @@ class KaloriController extends Controller
         return redirect()->route('food-intakes.create')->with('success', 'Hasil perhitungan kalori berhasil disimpan!');
     }
 
+    public function edit()
+    {
+        $user = auth()->user();
+        $profile = $user->profile; // Ambil profil pengguna
+
+        // Pastikan profil pengguna ada
+        if (!$profile) {
+            return redirect()->route('profile.edit')->with('error', 'Harap lengkapi profil Anda terlebih dahulu.');
+        }
+
+        return view('kalori.edit', compact('profile'));
+    }
+
+    public function update(Request $request)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'age' => 'required|integer|min:1|max:120',
+            'gender' => 'required|string|in:Laki-laki,Perempuan',
+            'height' => 'required|integer|min:50|max:250',
+            'weight' => 'required|numeric|min:20|max:300',
+            'activity_level' => 'required|string|in:Sangat Aktif,Cukup Aktif,Kurang Aktif',
+        ]);
+
+        // Perhitungan kalori
+        $bmr = $validated['gender'] === 'Laki-laki'
+            ? 88.36 + (13.4 * $validated['weight']) + (4.8 * $validated['height']) - (5.7 * $validated['age'])
+            : 447.6 + (9.2 * $validated['weight']) + (3.1 * $validated['height']) - (4.3 * $validated['age']);
+
+        $activity_multiplier = match ($validated['activity_level']) {
+            'Sangat Aktif' => 1.9,
+            'Cukup Aktif' => 1.55,
+            'Kurang Aktif' => 1.2,
+        };
+
+        $calories = $bmr * $activity_multiplier;
+
+        // Distribusi nutrisi
+        $protein_calories = $calories * 0.25; // 25% dari kalori untuk protein
+        $carbs_calories = $calories * 0.50; // 50% dari kalori untuk karbohidrat
+        $fat_calories = $calories * 0.25; // 25% dari kalori untuk lemak
+
+        $protein = $protein_calories / 4; // 1 gram protein = 4 kalori
+        $carbs = $carbs_calories / 4; // 1 gram karbohidrat = 4 kalori
+        $fat = $fat_calories / 9; // 1 gram lemak = 9 kalori
+
+        // Simpan hasil perhitungan ke profil pengguna
+        $user = auth()->user();
+        $profile = $user->profile;
+
+        if (!$profile) {
+            return redirect()->back()->with('error', 'Profil pengguna tidak ditemukan.');
+        }
+
+        $profile->update([
+            'calorie_limit' => $calories,
+            'protein_limit' => $protein,
+            'carbs_limit' => $carbs,
+            'fat_limit' => $fat,
+        ]);
+
+        return redirect()->route('kalori.result')->with('success', 'Perhitungan kalori berhasil diperbarui!');
+    }
+
+    public function result()
+    {
+        $user = auth()->user();
+        $profile = $user->profile;
+
+        if (!$profile) {
+            return redirect()->route('profile.edit')->with('error', 'Harap lengkapi profil Anda terlebih dahulu.');
+        }
+
+        return view('kalori.result', [
+            'calories' => $profile->calorie_limit,
+            'protein' => $profile->protein_limit,
+            'carbs' => $profile->carbs_limit,
+            'fat' => $profile->fat_limit,
+        ]);
+    }
+
     private function mapTingkatAktivitas($aktivitas, $reverse = false)
     {
         $tingkat_aktivitas = [

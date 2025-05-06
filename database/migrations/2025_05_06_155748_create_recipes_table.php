@@ -16,13 +16,12 @@ return new class extends Migration
             $table->string('nama_resep');
             $table->text('bahan');
             $table->text('langkah');
-            $table->integer('kalori');
-            $table->integer('protein');
-            $table->integer('carbs');
-            $table->integer('fat');
-            $table->integer('waktu_masak')->nullable(); // dalam menit, misalnya
+            $table->integer('kalori')->nullable();
+            $table->integer('protein')->nullable();
+            $table->integer('karbo')->nullable();
+            $table->integer('lemak')->nullable();
+            $table->string('waktu_masak')->nullable();
             $table->string('tag_nutrisi')->nullable();
-            $table->string('image')->nullable(); // untuk menyimpan nama file gambar
             $table->timestamps();
         });
     }

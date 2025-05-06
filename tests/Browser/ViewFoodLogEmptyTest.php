@@ -2,16 +2,17 @@
 
 namespace Tests\Browser;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class DeleteFoodLogTest extends DuskTestCase
+class ViewFoodLogEmptyTest extends DuskTestCase
 {
     /**
-     * Test menghapus data riwayat konsumsi gizi.
-     * @group deletefood
+     * A Dusk test example.
+     * @group datakosong
      */
-    public function testDeleteFoodLog()
+    public function testExample(): void
     {
         $this->browse(function (Browser $browser) {
             // Login terlebih dahulu
@@ -23,13 +24,7 @@ class DeleteFoodLogTest extends DuskTestCase
 
                 // Kunjungi halaman riwayat konsumsi gizi
                 ->visit('/riwayat-konsumsi-gizi') // Kunjungi halaman riwayat konsumsi gizi
-                ->assertSee('Nasi Kuning') // Pastikan data "Nasi Kuning" terlihat
-                ->waitFor('button[data-id="2"]', 5)
-                ->click('button[data-id="2"]')
-                ->waitForDialog(5) // Tunggu dialog konfirmasi muncul
-                ->acceptDialog() // Klik tombol "OK" pada dialog konfirmasi
-                ->pause(1000) // Tunggu sejenak untuk memastikan data terhapus
-                ->assertDontSee('Nasi Kuning'); // Pastikan data "Nasi Kuning" tidak lagi terlihat
+                ->assertSee('Belum ada data makanan untuk periode ini.'); // Pastikan pesan kosong terlihat
         });
     }
 }
