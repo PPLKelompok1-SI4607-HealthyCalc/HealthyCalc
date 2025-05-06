@@ -2,50 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
 {
-    private $recipes = [];
-
-    public function __construct()
+    public function index(Request $request)
     {
-        $this->recipes = session()->get('recipes', [
-            [
-                'id' => 1, 
-                'name' => 'Quinoa Bowl dengan Alpukat', 
-                'calories' => 320, 
-                'time' => '25 min', 
-                'tag' => 'Rendah Kalori',
-                'ingredients' => 'Quinoa, Alpukat, Tomat Cherry, Daun Bayam, Jagung Manis, Minyak Zaitun',
-                'instructions' => '1. Masak quinoa sesuai petunjuk kemasan. 2. Potong alpukat dan tomat cherry. 3. Campurkan semua bahan dan sajikan.'
-            ],
-            [
-                'id' => 2, 
-                'name' => 'Ayam Panggang dengan Sayuran', 
-                'calories' => 450, 
-                'time' => '35 min', 
-                'tag' => 'Tinggi Protein',
-                'ingredients' => 'Dada Ayam, Brokoli, Wortel, Paprika, Minyak Zaitun, Bawang Putih, Garam, Lada',
-                'instructions' => '1. Marinasi ayam dengan bawang putih, garam, dan lada. 2. Panggang ayam hingga matang. 3. Tumis sayuran hingga layu namun tetap renyah.'
-            ],
-            [
-                'id' => 3, 
-                'name' => 'Buddha Bowl dengan Tahu', 
-                'calories' => 380, 
-                'time' => '20 min', 
-                'tag' => 'Vegetarian',
-                'ingredients' => 'Tahu, Quinoa, Bawang Merah, Tomat, Selada, Timun, Alpukat, Saus Tahini',
-                'instructions' => '1. Potong tahu menjadi dadu dan panggang hingga kecokelatan. 2. Masak quinoa. 3. Sajikan semua bahan dalam mangkuk dan siram dengan saus tahini.'
-            ]
-        ]);
+        $query = Recipe::query();
+
+        // Filter by nutrition tag
+        if ($request->has('tag_nutrisi') && $request->tag_nutrisi !== null) {
+            $query->where('tag_nutrisi', $request->tag_nutrisi);
+        }
+
+        // Search functionality
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('nama_resep', 'like', '%'.$searchTerm.'%')
+                ->orWhere('tag_nutrisi', 'like', '%'.$searchTerm.'%')
+                ->orWhere('bahan', 'like', '%'.$searchTerm.'%')
+                ->orWhere('langkah', 'like', '%'.$searchTerm.'%');
+            });
+        }
+
+        $recipes = $query->get();
+
+        return view('recipes.index', ['recipes' => $recipes, 'search' => $request->search,
+        'tag_nutrisi' => $request->tag_nutrisi]);
     }
 
-    public function index()
-    {
-        session()->put('recipes', $this->recipes);
-        return view('recipes.index', ['recipes' => $this->recipes]);
-    }
 
     public function create()
     {
@@ -54,60 +42,103 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
-        $recipes = session()->get('recipes', []);
-        $id = count($recipes) > 0 ? max(array_column($recipes, 'id')) + 1 : 1;
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'calories' => 'required|integer',
+            'time' => 'required|string|max:20',
+            'tag' => 'required|string|max:50',
+            'ingredients' => 'nullable|string',
+            'instructions' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048', // tambahkan validasi gambar
+        ]);
 
-        $recipes[] = [
-            'id' => $id,
-            'name' => $request->name,
-            'calories' => $request->calories,
-            'time' => $request->time,
-            'tag' => $request->tag,
-            'ingredients' => $request->ingredients ?? '',
-            'instructions' => $request->instructions ?? ''
-        ];
+        $recipe = new Recipe();
+        $recipe->nama_resep = $request->name;
+        $recipe->kalori = $request->calories;
+        $recipe->waktu_masak = $request->time;
+        $recipe->tag_nutrisi = $request->tag;
+        $recipe->bahan = $request->ingredients ?? '';
+        $recipe->langkah = $request->instructions ?? '';
 
-        session()->put('recipes', $recipes);
+        // simpan gambar jika diunggah
+        // Handle image update
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($recipe->image && Storage::disk('public')->exists($recipe->image)) {
+                Storage::disk('public')->delete($recipe->image);
+            }
+            
+            // Store new image
+            $path = $request->file('image')->store('recipes', 'public');
+            $recipe->image = $path;
+        }
+        $recipe->save();
+
         return redirect()->route('recipes.index')->with('success', 'Resep berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $recipes = session()->get('recipes', []);
-        $recipe = collect($recipes)->firstWhere('id', (int)$id);
+        $recipe = Recipe::findOrFail($id);
+        
+        // Convert DB field names to match the field names used in the view
+        $recipeData = [
+            'id' => $recipe->id,
+            'name' => $recipe->nama_resep,
+            'calories' => $recipe->kalori,
+            'time' => $recipe->waktu_masak,
+            'tag' => $recipe->tag_nutrisi,
+            'ingredients' => $recipe->bahan,
+            'instructions' => $recipe->langkah,
+            'image' => $recipe->image
+        ];
 
-        if (!$recipe) {
-            return redirect()->route('recipes.index')->withErrors('Resep tidak ditemukan.');
-        }
-
-        return view('recipes.create', compact('recipe'));
+        return view('recipes.create', ['recipe' => $recipeData]);
     }
 
     public function update(Request $request, $id)
     {
-        $recipes = session()->get('recipes', []);
-        
-        foreach ($recipes as &$r) {
-            if ($r['id'] == $id) {
-                $r['name'] = $request->name;
-                $r['calories'] = $request->calories;
-                $r['time'] = $request->time;
-                $r['tag'] = $request->tag;
-                $r['ingredients'] = $request->ingredients ?? $r['ingredients'] ?? '';
-                $r['instructions'] = $request->instructions ?? $r['instructions'] ?? '';
-                break;
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'calories' => 'required|integer',
+            'time' => 'required|string|max:20',
+            'tag' => 'required|string|max:50',
+            'ingredients' => 'nullable|string',
+            'instructions' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $recipe = Recipe::findOrFail($id);
+
+        // Handle image update
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($recipe->image && Storage::disk('public')->exists($recipe->image)) {
+                Storage::disk('public')->delete($recipe->image);
             }
+        
+            // Store new image
+            $path = $request->file('image')->store('recipes', 'public');
+            $recipe->image = $path;
         }
 
-        session()->put('recipes', $recipes);
+        $recipe->nama_resep = $request->name;
+        $recipe->kalori = $request->calories;
+        $recipe->waktu_masak = $request->time;
+        $recipe->tag_nutrisi = $request->tag;
+        $recipe->bahan = $request->ingredients ?? $recipe->bahan;
+        $recipe->langkah = $request->instructions ?? $recipe->langkah;
+        $recipe->save();
+
         return redirect()->route('recipes.index')->with('success', 'Resep berhasil diperbarui');
     }
 
     public function destroy($id)
     {
-        $recipes = session()->get('recipes', []);
-        $recipes = array_filter($recipes, fn($r) => $r['id'] != $id);
-        session()->put('recipes', array_values($recipes)); // reset index array
+        $recipe = Recipe::findOrFail($id);
+        $recipe->delete();
+        
         return redirect()->route('recipes.index')->with('success', 'Resep berhasil dihapus');
     }
 }
+

@@ -16,13 +16,13 @@
             <h2 class="text-xl font-bold">{{ isset($recipe) ? 'Edit Resep' : 'Tambah Resep Baru' }}</h2>
         </div>
         
-        <form method="POST" action="{{ isset($recipe) ? route('recipes.update', $recipe['id']) : route('recipes.store') }}" class="p-6 space-y-6">
+        <form method="POST" action="{{ isset($recipe) ? route('recipes.update', $recipe['id']) : route('recipes.store') }}" class="p-6 space-y-6" enctype="multipart/form-data">
             @csrf
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Resep</label>
-                    <input type="text" id="name" name="name" value="{{ $recipe['name'] ?? '' }}" 
+                    <input type="text" id="name" name="name" value="{{ $recipe['name'] ?? old('name') }}" 
                         class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400" 
                         required>
                 </div>
@@ -39,29 +39,60 @@
                 
                 <div>
                     <label for="calories" class="block text-sm font-medium text-gray-700 mb-1">Kalori (kal)</label>
-                    <input type="number" id="calories" name="calories" value="{{ $recipe['calories'] ?? '' }}" 
+                    <input type="number" id="calories" name="calories" value="{{ $recipe['calories'] ?? old('calories') }}" 
                         class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400" 
                         required>
                 </div>
                 
                 <div>
                     <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Waktu Memasak (mis: 25 min)</label>
-                    <input type="text" id="time" name="time" value="{{ $recipe['time'] ?? '' }}" 
+                    <input type="text" id="time" name="time" value="{{ $recipe['time'] ?? old('time') }}" 
                         class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400" 
                         required>
+                </div>
+                
+                <div>
+                    <label for="protein" class="block text-sm font-medium text-gray-700 mb-1">Protein (g)</label>
+                    <input type="number" id="protein" name="protein" value="{{ $recipe['protein'] ?? old('protein') }}" 
+                        class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                </div>
+                
+                <div>
+                    <label for="carbs" class="block text-sm font-medium text-gray-700 mb-1">Karbohidrat (g)</label>
+                    <input type="number" id="carbs" name="carbs" value="{{ $recipe['carbs'] ?? old('carbs') }}" 
+                        class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                </div>
+                
+                <div>
+                    <label for="fat" class="block text-sm font-medium text-gray-700 mb-1">Lemak (g)</label>
+                    <input type="number" id="fat" name="fat" value="{{ $recipe['fat'] ?? old('fat') }}" 
+                        class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
                 </div>
             </div>
 
             <div>
                 <label for="ingredients" class="block text-sm font-medium text-gray-700 mb-1">Bahan-bahan</label>
                 <textarea id="ingredients" name="ingredients" rows="4" 
-                    class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ $recipe['ingredients'] ?? '' }}</textarea>
+                    class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ $recipe['ingredients'] ?? old('ingredients') }}</textarea>
             </div>
 
             <div>
                 <label for="instructions" class="block text-sm font-medium text-gray-700 mb-1">Instruksi Memasak</label>
                 <textarea id="instructions" name="instructions" rows="6" 
-                    class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ $recipe['instructions'] ?? '' }}</textarea>
+                    class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">{{ $recipe['instructions'] ?? old('instructions') }}</textarea>
+            </div>
+
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Foto Resep</label>
+                <input type="file" id="image" name="image"
+                    class="w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+
+                @if (isset($recipe['image']) && $recipe['image'])
+                    <div class="mt-3">
+                        <p class="text-sm text-gray-600 mb-1">Foto Saat Ini:</p>
+                        <img src="{{ asset('storage/' . $recipe['image']) }}" alt="Foto Resep" class="w-40 h-auto rounded shadow">
+                    </div>
+                @endif
             </div>
 
             <div class="flex items-center justify-end space-x-3 pt-4">

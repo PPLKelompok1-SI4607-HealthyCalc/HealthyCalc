@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('protein')->nullable();
             $table->integer('karbo')->nullable();
             $table->integer('lemak')->nullable();
+            $table->string('waktu_masak')->nullable();
+            $table->string('tag_nutrisi')->nullable();
             $table->timestamps();
         });
     }
