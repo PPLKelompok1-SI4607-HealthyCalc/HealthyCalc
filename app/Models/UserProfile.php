@@ -2,29 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class UserProfile extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_profiles';
+
     protected $fillable = [
         'user_id',
         'age',
+        'gender',
         'height',
         'weight',
-        'gender',
         'activity_level',
-        'diet_preferences',
-        'photo'
+        'is_vegetarian',
+        'is_low_calorie',
+        'is_gluten_free',
+        'profile_photo_path',
     ];
 
     protected $casts = [
-        'diet_preferences' => 'array',
+        'is_vegetarian' => 'boolean',
+        'is_low_calorie' => 'boolean',
+        'is_gluten_free' => 'boolean',
     ];
 
-    // Relasi ke user
     public function user()
     {
         return $this->belongsTo(User::class);

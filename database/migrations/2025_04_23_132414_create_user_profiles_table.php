@@ -11,12 +11,13 @@ return new class extends Migration
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->integer('age');
-            $table->float('height');
-            $table->float('weight');
-            $table->string('gender');
+            $table->integer('age')->nullable();
+            $table->string('gender')->nullable();
+            $table->integer('height')->nullable();
+            $table->float('weight')->nullable();
             $table->string('activity_level')->nullable();
-            $table->json('diet_preferences')->nullable();
+
+            $table->string('profile_photo_path')->nullable();
             $table->timestamps();
         });
     }

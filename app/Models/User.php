@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
     ];
 
@@ -22,14 +22,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
-    // Relasi ke tabel user_profiles
     public function profile()
     {
         return $this->hasOne(UserProfile::class);
+    }
+
+    // Relasi ke tabel food_intakes
+    public function foodIntakes(): HasMany
+    {
+        return $this->hasMany(FoodIntake::class);
     }
 }

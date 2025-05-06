@@ -9,19 +9,21 @@ class FoodLog extends Model
 {
     use HasFactory;
 
-    // Tentukan nama tabel jika berbeda dari konvensi plural nama model
     protected $table = 'food_logs'; 
 
-
     protected $fillable = [
-        'food_name', 'portion', 'calories', 'protein', 'carbs', 'fat', 'consumed_at'
+        'food_name',
+        'portion',
+        'calories',
+        'protein',
+        'carbs',
+        'fat',
+        'consumed_at',
     ];
 
- 
     protected $casts = [
         'consumed_at' => 'datetime',
     ];
-
 
     public $timestamps = true;
 

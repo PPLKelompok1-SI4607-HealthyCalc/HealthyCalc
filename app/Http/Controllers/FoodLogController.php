@@ -19,30 +19,29 @@ class FoodLogController extends Controller
             $query = FoodLog::query();
 
             // Tentukan rentang tanggal berdasarkan filter
-            switch ($filter) {
-                case 'mingguan':
-                    $start = Carbon::now()->startOfWeek();
-                    $end = Carbon::now()->endOfWeek();
-                    break;
+            $dateRanges = [
+                'mingguan' => [
+                    'start' => Carbon::now()->startOfWeek(),
+                    'end' => Carbon::now()->endOfWeek()
+                ],
+                'bulankalender' => [
+                    'start' => Carbon::now()->startOfMonth(),
+                    'end' => Carbon::now()->endOfMonth()
+                ],
+                '30hari' => [
+                    'start' => Carbon::now()->subDays(29)->startOfDay(),
+                    'end' => Carbon::now()->endOfDay()
+                ],
+                'harian' => [
+                    'start' => Carbon::today(),
+                    'end' => Carbon::today()->endOfDay()
+                ],
+            ];
 
-                case 'bulankalender':
-                    $start = Carbon::now()->startOfMonth();
-                    $end = Carbon::now()->endOfMonth();
-                    break;
+            // Pilih rentang waktu berdasarkan filter yang dipilih
+            $range = $dateRanges[$filter] ?? $dateRanges['harian'];
 
-                case '30hari':
-                    $start = Carbon::now()->subDays(29)->startOfDay(); // termasuk hari ini
-                    $end = Carbon::now()->endOfDay();
-                    break;
-
-                case 'harian':
-                default:
-                    $start = Carbon::today();
-                    $end = Carbon::today()->endOfDay();
-                    break;
-            }
-
-            $query->whereBetween('consumed_at', [$start, $end]);
+            $query->whereBetween('consumed_at', [$range['start'], $range['end']]);
 
             $foodLogs = $query->orderByDesc('consumed_at')->paginate(10);
 
@@ -83,6 +82,7 @@ class FoodLogController extends Controller
     public function store(Request $request)
     {
         try {
+            // Validasi input
             $validated = $request->validate([
                 'food_name'   => 'required|string|max:255',
                 'portion'     => 'required|string|max:100',
@@ -90,10 +90,23 @@ class FoodLogController extends Controller
                 'protein'     => 'required|numeric|min:0',
                 'carbs'       => 'required|numeric|min:0',
                 'fat'         => 'required|numeric|min:0',
-                'consumed_at' => 'required|date',
+                'consumed_at' => 'required|date_format:Y-m-d\TH:i',
             ]);
 
-            FoodLog::create($validated);
+            // Memastikan waktu dikonversi ke zona waktu yang benar
+            $consumedAt = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('consumed_at'))
+                                ->timezone('Asia/Jakarta'); // Mengonversi ke zona waktu Jakarta
+
+            // Menyimpan log makanan
+            FoodLog::create([
+                'food_name'   => $validated['food_name'],
+                'portion'     => $validated['portion'],
+                'calories'    => $validated['calories'],
+                'protein'     => $validated['protein'],
+                'carbs'       => $validated['carbs'],
+                'fat'         => $validated['fat'],
+                'consumed_at' => $consumedAt, // Waktu yang sudah dikonversi
+            ]);
 
             return redirect()->route('food_log.index')->with('success', 'Makanan berhasil ditambahkan!');
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -124,6 +137,7 @@ class FoodLogController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            // Validasi input
             $validated = $request->validate([
                 'food_name'   => 'required|string|max:255',
                 'portion'     => 'required|string|max:100',
@@ -131,11 +145,23 @@ class FoodLogController extends Controller
                 'protein'     => 'required|numeric|min:0',
                 'carbs'       => 'required|numeric|min:0',
                 'fat'         => 'required|numeric|min:0',
-                'consumed_at' => 'required|date',
+                'consumed_at' => 'required|date_format:Y-m-d\TH:i',
             ]);
 
+            // Memastikan waktu dikonversi ke zona waktu yang benar
+            $consumedAt = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('consumed_at'))
+                                ->timezone('Asia/Jakarta'); // Mengonversi ke zona waktu Jakarta
+
             $foodLog = FoodLog::findOrFail($id);
-            $foodLog->update($validated);
+            $foodLog->update([
+                'food_name'   => $validated['food_name'],
+                'portion'     => $validated['portion'],
+                'calories'    => $validated['calories'],
+                'protein'     => $validated['protein'],
+                'carbs'       => $validated['carbs'],
+                'fat'         => $validated['fat'],
+                'consumed_at' => $consumedAt, // Waktu yang sudah dikonversi
+            ]);
 
             return redirect()->route('food_log.index')->with('success', 'Data makanan berhasil diperbarui!');
         } catch (\Illuminate\Validation\ValidationException $e) {

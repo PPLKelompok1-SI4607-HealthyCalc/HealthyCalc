@@ -4,65 +4,74 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User; // pastikan User model dipakai
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Tampilkan halaman login
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    // Proses login
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
         if (Auth::attempt($credentials)) {
-            // Jika berhasil login
-            return redirect()->intended('/dashboard'); // ganti sesuai route kamu
+            $request->session()->regenerate();
+            return redirect()->intended(route('dashboard'))->with('success', 'Login berhasil!');
         }
 
-        // Jika gagal login
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ]);
     }
 
-    // Logout
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Anda telah berhasil logout.');
     }
 
-    // Tampilkan halaman register (sign up)
     public function showRegisterForm()
     {
         return view('auth.register');
     }
 
-    // Proses register
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'username' => 'required|alpha_dash|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Simpan user baru
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
         ]);
 
-        // Login otomatis setelah register
+        // Buat profil pengguna
+        $user->profile()->create([
+            'age' => null,
+            'gender' => null,
+            'height' => null,
+            'weight' => null,
+            'activity_level' => null,
+        ]);
+
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect()->route('dashboard')->with('success', 'Registrasi berhasil!');
     }
 }
