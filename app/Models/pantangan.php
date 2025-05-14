@@ -9,3 +9,4 @@ class Pantangan extends Model
 
     protected $fillable = ['nama_makanan', 'kategori'];
 }
+
