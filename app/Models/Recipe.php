@@ -31,6 +31,6 @@ class Recipe extends Model
         'lemak',
         'waktu_masak',
         'tag_nutrisi',
-        'image'
+        'image_path' // Diubah dari image menjadi image_path
     ];
 }

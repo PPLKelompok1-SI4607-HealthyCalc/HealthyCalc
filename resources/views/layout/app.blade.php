@@ -34,7 +34,7 @@
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600">Dashboard</a>
                     <a href="{{ route('recipes.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('recipes.*') ? 'bg-green-600' : 'hover:bg-green-600' }}">Resep</a>
-                    <a href="#" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600">Suplemen</a>
+                    <a href="{{ route('supplements.index') }}" class="...">Suplemen</a>
                     <a href="#" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600">Profil</a>
                     <div class="ml-3 relative">
                         <div>

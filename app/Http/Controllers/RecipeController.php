@@ -30,10 +30,12 @@ class RecipeController extends Controller
 
         $recipes = $query->get();
 
-        return view('recipes.index', ['recipes' => $recipes, 'search' => $request->search,
-        'tag_nutrisi' => $request->tag_nutrisi]);
+        return view('recipes.index', [
+            'recipes' => $recipes, 
+            'search' => $request->search,
+            'tag_nutrisi' => $request->tag_nutrisi
+        ]);
     }
-
 
     public function create()
     {
@@ -49,7 +51,10 @@ class RecipeController extends Controller
             'tag' => 'required|string|max:50',
             'ingredients' => 'nullable|string',
             'instructions' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048', // tambahkan validasi gambar
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'protein' => 'nullable|integer',
+            'carbs' => 'nullable|integer',
+            'fat' => 'nullable|integer'
         ]);
 
         $recipe = new Recipe();
@@ -59,19 +64,16 @@ class RecipeController extends Controller
         $recipe->tag_nutrisi = $request->tag;
         $recipe->bahan = $request->ingredients ?? '';
         $recipe->langkah = $request->instructions ?? '';
+        $recipe->protein = $request->protein;
+        $recipe->karbo = $request->carbs;
+        $recipe->lemak = $request->fat;
 
         // simpan gambar jika diunggah
-        // Handle image update
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($recipe->image && Storage::disk('public')->exists($recipe->image)) {
-                Storage::disk('public')->delete($recipe->image);
-            }
-            
-            // Store new image
             $path = $request->file('image')->store('recipes', 'public');
-            $recipe->image = $path;
+            $recipe->image_path = $path;
         }
+        
         $recipe->save();
 
         return redirect()->route('recipes.index')->with('success', 'Resep berhasil ditambahkan');
@@ -90,7 +92,10 @@ class RecipeController extends Controller
             'tag' => $recipe->tag_nutrisi,
             'ingredients' => $recipe->bahan,
             'instructions' => $recipe->langkah,
-            'image' => $recipe->image
+            'protein' => $recipe->protein,
+            'carbs' => $recipe->karbo,
+            'fat' => $recipe->lemak,
+            'image' => $recipe->image_path
         ];
 
         return view('recipes.create', ['recipe' => $recipeData]);
@@ -106,6 +111,9 @@ class RecipeController extends Controller
             'ingredients' => 'nullable|string',
             'instructions' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'protein' => 'nullable|integer',
+            'carbs' => 'nullable|integer',
+            'fat' => 'nullable|integer'
         ]);
 
         $recipe = Recipe::findOrFail($id);
@@ -113,13 +121,13 @@ class RecipeController extends Controller
         // Handle image update
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($recipe->image && Storage::disk('public')->exists($recipe->image)) {
-                Storage::disk('public')->delete($recipe->image);
+            if ($recipe->image_path && Storage::disk('public')->exists($recipe->image_path)) {
+                Storage::disk('public')->delete($recipe->image_path);
             }
         
             // Store new image
             $path = $request->file('image')->store('recipes', 'public');
-            $recipe->image = $path;
+            $recipe->image_path = $path;
         }
 
         $recipe->nama_resep = $request->name;
@@ -128,6 +136,9 @@ class RecipeController extends Controller
         $recipe->tag_nutrisi = $request->tag;
         $recipe->bahan = $request->ingredients ?? $recipe->bahan;
         $recipe->langkah = $request->instructions ?? $recipe->langkah;
+        $recipe->protein = $request->protein;
+        $recipe->karbo = $request->carbs;
+        $recipe->lemak = $request->fat;
         $recipe->save();
 
         return redirect()->route('recipes.index')->with('success', 'Resep berhasil diperbarui');
@@ -136,9 +147,14 @@ class RecipeController extends Controller
     public function destroy($id)
     {
         $recipe = Recipe::findOrFail($id);
+        
+        // Delete image if exists
+        if ($recipe->image_path && Storage::disk('public')->exists($recipe->image_path)) {
+            Storage::disk('public')->delete($recipe->image_path);
+        }
+        
         $recipe->delete();
         
         return redirect()->route('recipes.index')->with('success', 'Resep berhasil dihapus');
     }
 }
-

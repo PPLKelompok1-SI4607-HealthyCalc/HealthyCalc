@@ -18,6 +18,9 @@
         
         <form method="POST" action="{{ isset($recipe) ? route('recipes.update', $recipe['id']) : route('recipes.store') }}" class="p-6 space-y-6" enctype="multipart/form-data">
             @csrf
+            @if(isset($recipe))
+                @method('PUT')
+            @endif
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

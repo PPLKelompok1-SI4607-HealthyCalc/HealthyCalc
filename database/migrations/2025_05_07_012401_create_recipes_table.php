@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('nama_resep');
-            $table->text('bahan');
-            $table->text('langkah');
-            $table->integer('kalori')->nullable();
+            $table->text('bahan')->nullable();
+            $table->text('langkah')->nullable();
+            $table->integer('kalori');
             $table->integer('protein')->nullable();
             $table->integer('karbo')->nullable();
             $table->integer('lemak')->nullable();
-            $table->string('waktu_masak')->nullable();
-            $table->string('tag_nutrisi')->nullable();
+            $table->string('waktu_masak');
+            $table->string('tag_nutrisi');
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }
