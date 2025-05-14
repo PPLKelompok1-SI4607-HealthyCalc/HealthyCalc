@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NutritionSummaryController;
 use App\Http\Controllers\KaloriController;
 use App\Http\Controllers\WeightProgressController;
+use App\Http\Controllers\PantanganController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,3 +22,5 @@ Route::get('/kalori', [KaloriController::class, 'index'])->name('kalori.index');
 Route::post('/kalori/hitung', [KaloriController::class, 'hitung'])->name('kalori.hitung');
 Route::get('/kalori/edit', [KaloriController::class, 'edit'])->name('kalori.edit');
 Route::get('/kalori/reset', [KaloriController::class, 'reset'])->name('kalori.reset');
+
+Route::get('/pantangan', [PantanganController::class, 'index'])->name('pantangan.index');
