@@ -1,4 +1,3 @@
-namespace App\Http\Controllers;
 use App\Http\Controllers\SupplementController;
 use Illuminate\Http\Request;
 
