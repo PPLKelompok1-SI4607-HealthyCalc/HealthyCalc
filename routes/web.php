@@ -90,6 +90,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/simulasi-defisit/hitung', [SimulasiDefisitController::class, 'hitung'])->name('simulasi-defisit.hitung');
 
     
+    
+
 
     Route::get('/community/create', [CommunityPostController::class, 'create'])->name('community.create');
     Route::post('/community', [CommunityPostController::class, 'store'])->name('community.store');
