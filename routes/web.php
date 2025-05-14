@@ -12,6 +12,7 @@ use App\Http\Controllers\FoodIntakeController;
 use App\Http\Controllers\KaloriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SimulasiDefisitController;
+use App\Http\Controllers\CommunityPostController;
 
 
 // Rute Profil
@@ -87,4 +88,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('simulasi-defisit', SimulasiDefisitController::class);
     Route::get('/simulasi-defisit', [SimulasiDefisitController::class, 'index'])->name('simulasi-defisit.index');
     Route::post('/simulasi-defisit/hitung', [SimulasiDefisitController::class, 'hitung'])->name('simulasi-defisit.hitung');
+
+    
+
+    Route::get('/community/create', [CommunityPostController::class, 'create'])->name('community.create');
+    Route::post('/community', [CommunityPostController::class, 'store'])->name('community.store');
+    Route::get('/community', [CommunityPostController::class, 'index'])->name('community.index');
+    Route::get('/community/{id}', [CommunityPostController::class, 'show'])->name('community.show');
+    Route::get('/community/{id}/edit', [CommunityPostController::class, 'edit'])->name('community.edit');
+    Route::put('/community/{id}', [CommunityPostController::class, 'update'])->name('community.update');
+    Route::delete('/community/{id}', [CommunityPostController::class, 'destroy'])->name('community.destroy');
 });
