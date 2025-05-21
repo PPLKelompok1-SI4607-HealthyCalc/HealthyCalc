@@ -7,6 +7,7 @@ use App\Http\Controllers\NutritionSummaryController;
 use App\Http\Controllers\WeightProgressController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FoodIntakeController;
+use App\Http\Controllers\AktivitasController;
 
 Route::resource('food-intakes', FoodIntakeController::class);
 
@@ -40,6 +41,11 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
+Route::prefix('aktivitas')->group(function () {
+    Route::get('/', [AktivitasController::class, 'index']);
+    Route::match(['get', 'post'], '/manage', [AktivitasController::class, 'manage']);
+    Route::delete('/delete/{id}', [AktivitasController::class, 'delete']);
+});
 
 
 
