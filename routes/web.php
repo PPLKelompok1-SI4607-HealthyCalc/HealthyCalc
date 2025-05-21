@@ -13,6 +13,7 @@ use App\Http\Controllers\KaloriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SimulasiDefisitController;
 use App\Http\Controllers\CommunityPostController;
+use App\Http\Controllers\CommunityCommentController;
 
 
 // Rute Profil
@@ -100,4 +101,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/community/{id}/edit', [CommunityPostController::class, 'edit'])->name('community.edit');
     Route::put('/community/{id}', [CommunityPostController::class, 'update'])->name('community.update');
     Route::delete('/community/{id}', [CommunityPostController::class, 'destroy'])->name('community.destroy');
+
+    
+
+    Route::get('/community', [CommunityPostController::class, 'index'])->name('community.index'); // list semua postingan
+    Route::get('/community/{id}', [CommunityPostController::class, 'show'])->name('community.show'); // lihat detail
 });
