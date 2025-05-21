@@ -24,3 +24,7 @@ Route::get('/kalori/edit', [KaloriController::class, 'edit'])->name('kalori.edit
 Route::get('/kalori/reset', [KaloriController::class, 'reset'])->name('kalori.reset');
 
 Route::get('/pantangan', [PantanganController::class, 'index'])->name('pantangan.index');
+Route::post('/pantangan', [PantanganController::class, 'store'])->name('pantangan.store');
+Route::get('/pantangan/{id}/edit', [PantanganController::class, 'edit'])->name('pantangan.edit');
+Route::post('/pantangan/{id}/update', [PantanganController::class, 'update'])->name('pantangan.update');
+Route::delete('/pantangan/{id}', [PantanganController::class, 'destroy'])->name('pantangan.destroy');
