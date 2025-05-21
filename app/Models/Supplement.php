@@ -9,9 +9,5 @@ class Supplement extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'dosage',
-        'schedule',
-    ];
+    protected $fillable = ['name', 'dosage', 'schedule'];
 }

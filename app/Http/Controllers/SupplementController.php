@@ -1,4 +1,8 @@
-use App\Http\Controllers\SupplementController;
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Supplement;
 use Illuminate\Http\Request;
 
 class SupplementController extends Controller

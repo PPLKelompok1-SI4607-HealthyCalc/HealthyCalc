@@ -10,6 +10,7 @@ use App\Http\Controllers\FoodChartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplementController;
 
+
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -31,7 +32,15 @@ Route::post('/recipes', [RecipeController::class, 'store'])->name('recipes.store
 Route::get('/recipes/{id}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
 Route::put('/recipes/{id}', [RecipeController::class, 'update'])->name('recipes.update'); 
 Route::delete('/recipes/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy'); 
-Route::resource('supplements', SupplementController::class);
+
+// Supplement Routes 
+Route::get('/supplements', [SupplementController::class, 'index'])->name('supplements.index');
+Route::get('/supplements/create', [SupplementController::class, 'create'])->name('supplements.create');
+Route::post('/supplements', [SupplementController::class, 'store'])->name('supplements.store');
+Route::get('/supplements/{id}/edit', [SupplementController::class, 'edit'])->name('supplements.edit');
+Route::put('/supplements/{id}', [SupplementController::class, 'update'])->name('supplements.update');
+Route::delete('/supplements/{id}', [SupplementController::class, 'destroy'])->name('supplements.destroy');
+
 
 
 // Profile Routes
