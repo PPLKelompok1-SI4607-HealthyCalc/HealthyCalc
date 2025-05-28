@@ -1,110 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
+@extends('layouts.app')
 
-        input {
-            width: 400px;
-            padding: 12px;
-            margin: 10px;
-            border-radius: 10px;
-            border: 1px solid #2b2b2b;
-            font-size: 16px;
-        }
-
-        .btn {
-            padding: 12px;
-            border-radius: 25px;
-            width: 420px;
-            margin: 10px auto;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .btn-primary {
-            background-color: #009966;
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #007f55;
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        .btn-outline {
-            background-color: white;
-            border: 1px solid #2b2b2b;
-            color: #2b2b2b;
-        }
-
-        .btn-outline:hover {
-            background-color: #f2f2f2;
-        }
-
-        .btn-outline:active {
-            transform: scale(0.98);
-        }
-
-        .divider {
-            margin: 20px auto;
-            width: 420px;
-            display: flex;
-            align-items: center;
-            color: gray;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: #ccc;
-        }
-
-        .divider span {
-            padding: 0 10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Sign Up</h1>
-    <p>Create an account</p>
-
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+@section('content')
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 p-4">
+        <!-- Gambar -->
+        <div class="col-12 col-lg-6 order-1 order-lg-2 d-flex justify-content-center align-items-center">
+            <div class="text-center">
+                <img src="/img/healthycalc.png" class="img-fluid" alt="Sign Up Illustration">
+            </div>
         </div>
-    @endif
 
-    <form method="POST" action="{{ url('/register') }}">
-        @csrf
-        <input type="text" name="name" placeholder="Enter your name" value="{{ old('name') }}"><br>
-        <input type="email" name="email" placeholder="Enter your email" value="{{ old('email') }}"><br>
-        <input type="password" name="password" placeholder="Enter your password"><br>
-        <button class="btn btn-primary" type="submit">Sign Up</button>
-    </form>
-
-    <div class="divider"><span>or</span></div>
-
-    <a href="{{ route('login') }}">
-        <button class="btn btn-outline">Sign In</button>
-    </a>
-</body>
-</html>
+        <!-- Form -->
+        <div class="col-12 col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+            <p class="text-center fs-4 fw-bold text-success">Sign Up</p>
+            <p class="text-center fs-6">Already have an account?
+                <span><a href="{{ url('/login') }}" class="text-success">Sign In</a></span>
+            </p>
+            <form method="POST" action="{{ url('/register') }}" class="w-100 px-4">
+                @csrf
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="name" placeholder="Enter your name"
+                        value="{{ old('name') }}">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Enter your username"
+                        value="{{ old('username') }}">
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Enter your email"
+                        value="{{ old('email') }}">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Enter your password">
+                </div>
+                <button class="btn btn-primary w-100 bg-green" type="submit">Create account</button>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
