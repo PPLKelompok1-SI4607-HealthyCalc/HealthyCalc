@@ -32,4 +32,18 @@ class DashboardHomeController extends Controller{
         'message' => 'Dashboard berhasil ditambahkan',
         'data' => $dashboard
     ], 201);
+    
+}
+
+    public function showChart($id)
+    {
+        $dashboard = Dashboard::findOrFail($id);
+        // Data chart bisa diambil atau diolah di sini, contoh sederhana:
+        $chartData = [
+            // Contoh data statis, ganti dengan data sesuai kebutuhan
+            'labels' => ['Januari', 'Februari', 'Maret'],
+            'values' => [10, 20, 15],
+        ];
+        return view('dashboard.chart', compact('dashboard', 'chartData'));
+    }
 }
