@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('simulations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->float('weight');
+            $table->string('target_weight');
+            $table->float('calories');
+            $table->string('target_calories');
+            $table->enum('activity_level', ['Sangat Aktif', 'Cukup Aktif', 'Kurang Aktif'])->nullable();
+            $table->integer('estimated_time');
+            $table->float('weekly_change')->nullable();
+            $table->integer('target_daily_calories')->nullable();
+            $table->string('recommendation')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('simulations');
+    }
+};

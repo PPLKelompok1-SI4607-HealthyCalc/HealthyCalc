@@ -1,43 +1,41 @@
-@extends('layouts.tailwind-app')
+@extends('layouts.app')
 
 @section('content')
-<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-center mb-4">Register</h2>
-
-    <form action="{{ route('register') }}" method="POST">
-        @csrf
-
-        <!-- Nama Lengkap -->
-        <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-            <input type="text" name="name" id="name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" value="{{ old('name') }}" required>
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 p-4">
+        <!-- Gambar -->
+        <div class="col-12 col-lg-6 order-1 order-lg-2 d-flex justify-content-center align-items-center">
+            <div class="text-center">
+                <img src="/img/healthycalc.png" class="img-fluid" alt="Sign Up Illustration">
+            </div>
         </div>
 
-        <!-- Email -->
-        <div class="mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" name="email" id="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" value="{{ old('email') }}" required>
+        <!-- Form -->
+        <div class="col-12 col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+            <p class="text-center fs-4 fw-bold text-success">Sign Up</p>
+            <p class="text-center fs-6">Already have an account?
+                <span><a href="{{ url('/login') }}" class="text-success">Sign In</a></span>
+            </p>
+            <form method="POST" action="{{ url('/register') }}" class="w-100 px-4">
+                @csrf
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="name" placeholder="Enter your name"
+                        value="{{ old('name') }}">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Enter your username"
+                        value="{{ old('username') }}">
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Enter your email"
+                        value="{{ old('email') }}">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Enter your password">
+                </div>
+                <button class="btn btn-primary w-100 bg-green" type="submit">Create account</button>
+            </form>
         </div>
-
-        <!-- Username -->
-        <div class="mb-4">
-            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-            <input type="text" name="username" id="username" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" value="{{ old('username') }}" required>
-        </div>
-
-        <!-- Password -->
-        <div class="mb-4">
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input type="password" name="password" id="password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-        </div>
-
-        <!-- Konfirmasi Password -->
-        <div class="mb-4">
-            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Konfirmasi Password</label>
-            <input type="password" name="password_confirmation" id="password_confirmation" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-        </div>
-
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Daftar</button>
-    </form>
+    </div>
 </div>
 @endsection

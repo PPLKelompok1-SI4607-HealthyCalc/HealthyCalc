@@ -1,21 +1,32 @@
-@extends('layouts.tailwind-app')
+@extends('layouts.app')
 
 @section('content')
-<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-center mb-4">Login</h2>
-
-    <form action="{{ route('login') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" name="email" id="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+    <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="row p-4 w-100 h-100 d-flex align-items-center">
+            <div class="col-12 col-lg-6 order-1 order-lg-2">
+                <div class="text-center">
+                    <img src="/img/healthycalc.png" class="img-fluid" alt="Sign Up Illustration">
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 order-2 order-lg-1">
+                <p class="text-center fs-4 fw-bold text-success">Sign In</p>
+                <p class="text-center fs-6">Welcome back!</p>
+                <p class="text-center fs-6">Don't have an account?
+                    <span> <a href="{{ url('/register') }} " class="text-success">Sign Up</a></span>
+                </p>
+                <form method="POST" action="{{ route('login') }}" class="w-100">
+                    @csrf
+                    <div class="mb-3">
+                        <input type="email" name="email" dusk="email" class="form-control"
+                            placeholder="Enter your email">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" name="password" dusk="password" class="form-control"
+                            placeholder="Enter your password">
+                    </div>
+                    <button type="submit" dusk="login-button" class="btn btn-primary w-100">Sign In</button>
+                </form>
+            </div>
         </div>
-        <div class="mb-4">
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input type="password" name="password" id="password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-        </div>
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Login</button>
-    </form>
-    <p class="text-center mt-4 text-sm text-gray-600">Belum punya akun? <a href="{{ route('register') }}" class="text-blue-500 hover:underline">Daftar</a></p>
-</div>
+    </div>
 @endsection

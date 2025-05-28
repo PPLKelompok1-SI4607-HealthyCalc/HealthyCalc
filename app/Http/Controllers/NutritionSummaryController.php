@@ -1,16 +1,33 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\FoodLog;
+use Illuminate\Support\Facades\DB;
+
 
 class NutritionSummaryController extends Controller
 {
     public function index()
     {
-        $foodLogs = FoodLog::orderBy('consumed_at', 'desc')->take(5)->get();
-        $summary = FoodLog::selectRaw('SUM(calories) as total_calories, SUM(protein) as total_protein, SUM(carbs) as total_carbs, SUM(fat) as total_fat')->first();
+        $userId = auth()->id(); 
+        $today = now()->toDateString();
 
-        return view('dashboard.index', compact('foodLogs', 'summary'));
+        $intake = DB::table('food_logs')
+            ->where('user_id', $userId)
+            ->whereDate('created_at', $today)
+            ->selectRaw('
+                SUM(calories) as calories,
+                SUM(protein) as protein,
+                SUM(carbs) as carbs,
+                SUM(fat) as fat
+            ')
+            ->first();
+
+        $target = DB::table('user_targets')
+            ->where('user_id', $userId)
+            ->first();
+
+        return view('dashboard.nutrition', compact('intake', 'target'));
     }
 }

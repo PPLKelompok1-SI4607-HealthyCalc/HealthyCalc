@@ -8,29 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Recipe extends Model
 {
     use HasFactory;
-    
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'recipes';
+    protected $guarded = ['id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'nama_resep',
-        'bahan',
-        'langkah',
-        'kalori',
-        'protein',
-        'karbo',
-        'lemak',
-        'waktu_masak',
-        'tag_nutrisi',
-        'image'
-    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
