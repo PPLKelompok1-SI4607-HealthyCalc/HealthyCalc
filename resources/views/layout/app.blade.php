@@ -51,7 +51,7 @@
     </nav>
 
     <!-- Flash Messages -->
-    @if(session('success'))
+    @if(session('success suplemen'))
     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 max-w-7xl mx-auto mt-4" role="alert">
         <p>{{ session('success') }}</p>
     </div>
