@@ -64,6 +64,6 @@ class PantanganController extends Controller
         $pantangan = Pantangan::findOrFail($id);
         $pantangan->delete();
 
-        return redirect()->route('pantangan.index');
+        return redirect()->route('pantangan.index')->with('success', 'Data berhasil dihapus.');
     }
 }
