@@ -4,5 +4,4 @@ print("akuugemoy")
 print("HM")
 print("haii")
 print("fidelasr")
-
-    
+print("Dinar Khansa")
