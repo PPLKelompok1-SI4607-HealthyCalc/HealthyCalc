@@ -1,0 +1,38 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/cdn.jsdelivr.net\/npm\/chart.js 18:91702 \"Failed to create chart: can't acquire context from the given item\"",
+        "source": "console-api",
+        "timestamp": 1748896675747
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/127.0.0.1:8000\/login - Failed to load resource: net::ERR_TOO_MANY_REDIRECTS",
+        "source": "network",
+        "timestamp": 1748896681028
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/127.0.0.1:8000\/login - Failed to load resource: net::ERR_TOO_MANY_REDIRECTS",
+        "source": "network",
+        "timestamp": 1748896686726
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/cdn.jsdelivr.net\/npm\/chart.js 18:91702 \"Failed to create chart: can't acquire context from the given item\"",
+        "source": "console-api",
+        "timestamp": 1748896686735
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/127.0.0.1:8000\/login - Failed to load resource: net::ERR_TOO_MANY_REDIRECTS",
+        "source": "network",
+        "timestamp": 1748896691758
+    },
+    {
+        "level": "SEVERE",
+        "message": "https:\/\/cdn.jsdelivr.net\/npm\/chart.js 18:91702 \"Failed to create chart: can't acquire context from the given item\"",
+        "source": "console-api",
+        "timestamp": 1748896691765
+    }
+]
