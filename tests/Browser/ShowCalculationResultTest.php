@@ -15,22 +15,21 @@ class ShowCalculationResultTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/login')
-                ->type('email', 'tepi1@gmail.com')           // isi email login
-                ->type('password', '12345678')                // isi password login
-                ->press('Sign In')                            // klik tombol login
-                ->assertPathIs('/dashboard')                  // pastikan diarahkan ke /dashboard
+                ->type('email', 'tepi1@gmail.com')           
+                ->type('password', '12345678')                
+                ->press('Sign In')                            
+                ->assertPathIs('/dashboard')                  
 
-                ->visit('/calculations')                      // buka halaman kalkulasi
+                ->visit('/calculations')                      
 
-                ->type('age', '25')                           // isi usia
-                ->select('gender', 'Perempuan')               // pilih jenis kelamin
-                ->type('height', '170')                        // isi tinggi badan
-                ->type('weight', '60')                         // isi berat badan
-                ->select('activity_level', 'Cukup Aktif')     // pilih tingkat aktivitas
+                ->type('age', '25')                           
+                ->select('gender', 'Perempuan')               
+                ->type('height', '170')                        
+                ->type('weight', '60')                         
+                ->select('activity_level', 'Cukup Aktif')    
+                ->press('Hitung')                             
 
-                ->press('Hitung')                             // submit form
-
-                ->waitForText('Kalori yang dibutuhkan per hari:', 10)  // tunggu sampai muncul teks hasil
+                ->waitForText('Kalori yang dibutuhkan per hari:', 10)  
                 ->assertSee('Kalori yang dibutuhkan per hari:')
                 ->assertSee('Protein yang dibutuhkan per hari:')
                 ->assertSee('Karbohidrat yang dibutuhkan per hari:')
