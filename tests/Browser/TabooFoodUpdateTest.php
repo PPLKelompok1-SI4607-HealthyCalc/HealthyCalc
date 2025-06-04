@@ -26,32 +26,28 @@ class TabooFoodUpdateTest extends DuskTestCase
                 ->assertSee('Daftar Makanan Pantangan')
                 ->pause(1000);
 
-            // Klik tombol edit yang ada di baris "Udang" langsung lewat JS agar lebih aman
-            $browser->script("
-                [...document.querySelectorAll('table tbody tr')].forEach(tr => {
-                    if(tr.innerText.includes('Udang')) {
-                        const btn = tr.querySelector('button[data-bs-toggle=\"modal\"]');
-                        if(btn) btn.click();
-                    }
-                });
-            ");
-
-            // Tunggu modal spesifik muncul, contoh modal id = editTabooFoodModal-123
-            // Kita coba ambil modal yang tampil dengan kelas .modal.show (modal aktif)
-            $browser->waitFor('.modal.show', 5);
-
-            // Isi form di modal yang muncul (asumsi hanya ada 1 modal aktif)
-            $browser->whenAvailable('.modal.show', function (Browser $modal) {
-                $modal->clear('input[name="food_name"]')
-                      ->type('input[name="food_name"]', 'Keripik Ubi')
-                      ->press('Simpan');
+            // Cari container makanan dengan data-food-name 'udang' lalu klik tombol edit
+            $browser->with("[data-food-name='udang']", function ($food) {
+                $food->click('button.btn-outline-primary');
             });
 
-            // Tunggu modal hilang setelah simpan
+            // Tunggu modal edit muncul
+            $browser->waitFor('.modal.show', 5);
+
+            // Isi form modal yang aktif
+            $browser->whenAvailable('.modal.show', function ($modal) {
+                $modal->clear('input[name="food_name"]')
+                      ->type('input[name="food_name"]', 'Keripik Ubi')
+                      ->select('select[name="taboo"]', 'kolesterol')
+                      ->press('Ubah');
+            });
+
+            // Tunggu modal hilang
             $browser->waitUntilMissing('.modal.show', 5);
 
-            // Pastikan teks baru muncul di halaman
-            $browser->assertSee('Keripik Ubi');
+            // Pastikan perubahan tampil di halaman
+            $browser->assertSee('Keripik Ubi')
+                    ->assertSee('kolesterol');
         });
     }
 }
