@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,4 +37,10 @@ class ProfileController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Profil berhasil disimpan');
     }
+=======
+
+class ProfileController extends Controller
+{
+    //
+>>>>>>> fb943eb (commityesi)
 }

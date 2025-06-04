@@ -6,7 +6,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NutritionSummaryController;
 use App\Http\Controllers\WeightProgressController;
 use App\Http\Controllers\ProfileController;
+<<<<<<< HEAD
 
+=======
+use App\Http\Controllers\FoodChartController;
+>>>>>>> fb943eb (commityesi)
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -22,4 +26,7 @@ Route::get('/dashboard/food-chart', [FoodChartController::class, 'index'])->name
 
 Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
 Route::post('/profile/store', [ProfileController::class, 'store'])->name('profile.store');
+<<<<<<< HEAD
 
+=======
+>>>>>>> fb943eb (commityesi)
