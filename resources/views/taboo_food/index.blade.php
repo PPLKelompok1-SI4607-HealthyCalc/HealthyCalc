@@ -3,6 +3,7 @@
 @section('content')
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <div class="container-fluid">
         <div class="row mb-2">
             <p class="title py-2 fs-3 fw-bold">Makanan Pantangan</p>
@@ -27,6 +28,8 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Tutup"></button>
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 <div class="container-fluid">
@@ -68,6 +71,9 @@
                                         <option value="lemak">Lemak</option>
                                     </select>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -88,6 +94,7 @@
         </div>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
         <div class="row">
             <div class="container">
@@ -99,6 +106,8 @@
                                     <i class="bi bi-exclamation-triangle text-danger fs-5"></i>
                                     <span class="fw-semibold fs-6 text-danger text-capitalize">{{ $taboo }}</span>
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     </div>
@@ -211,6 +220,9 @@
                                         </button>
                                     </form>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -219,6 +231,7 @@
                         </div>
                     @endforeach
                 </div>
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
@@ -324,6 +337,13 @@
             </div>
         </div>
     </div>
+=======
+            </div>
+
+        </div>
+    </div>
+</div>
+>>>>>>> Stashed changes
 =======
             </div>
 

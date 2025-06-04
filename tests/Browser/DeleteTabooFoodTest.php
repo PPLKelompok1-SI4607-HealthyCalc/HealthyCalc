@@ -16,14 +16,22 @@ class DeleteTabooFoodTest extends DuskTestCase
      */
     public function test_user_can_delete_taboo_food_successfully()
     {
+<<<<<<< Updated upstream
 
+=======
+        // Cari user id berdasarkan email yang sudah ada
+>>>>>>> Stashed changes
         $user = DB::table('users')->where('email', 'tepi2@gmail.com')->first();
         if (!$user) {
             $this->fail('User tepi2@gmail.com belum ada di database.');
             return;
         }
 
+<<<<<<< Updated upstream
   
+=======
+        // Insert data makanan pantangan baru dengan nama unik
+>>>>>>> Stashed changes
         DB::table('taboo_food')->insert([
             'user_id' => $user->id,
             'food_name' => 'ikan',
