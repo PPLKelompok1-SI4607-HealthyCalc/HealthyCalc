@@ -106,6 +106,6 @@ class FoodPlanningController extends Controller
     public function destroy(FoodPlanning $foodPlanning)
     {
         $foodPlanning->delete();
-        return redirect()->route('food-plannings.index')->with('success', 'Rencana makanan berhasil dihapus');
+        return redirect()->route('food-plannings.index')->with('success', 'Rencana makanan sudah berhasil dihapus');
     }
 }
