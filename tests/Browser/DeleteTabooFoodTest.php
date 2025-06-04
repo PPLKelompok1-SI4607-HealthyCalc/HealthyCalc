@@ -17,7 +17,11 @@ class DeleteTabooFoodTest extends DuskTestCase
     public function test_user_can_delete_taboo_food_successfully()
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+        // Cari user id berdasarkan email yang sudah ada
+>>>>>>> Stashed changes
 =======
         // Cari user id berdasarkan email yang sudah ada
 >>>>>>> Stashed changes
@@ -28,7 +32,11 @@ class DeleteTabooFoodTest extends DuskTestCase
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   
+=======
+        // Insert data makanan pantangan baru dengan nama unik
+>>>>>>> Stashed changes
 =======
         // Insert data makanan pantangan baru dengan nama unik
 >>>>>>> Stashed changes
