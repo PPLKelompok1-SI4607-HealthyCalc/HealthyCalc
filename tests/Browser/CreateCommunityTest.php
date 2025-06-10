@@ -21,20 +21,7 @@ class CreateCommunityTest extends DuskTestCase
                 ->type('email', 'testuser@example.com')
                 ->type('password', 'testing123')
                 ->press('@login-button')
-<<<<<<< Updated upstream
-                ->assertPathIs('/dashboard')
-                ->visit('/communities')
-                ->click('@create-post-button')
-                ->waitFor('select[name="category"]', 10)
-                ->select('category', 'Umum')
-                ->type('title', 'Diet Bro')
-                ->type('description', 'DIET itu penting untuk kesehatan tubuh')
-                ->press('Posting')
-                ->pause(2000);
-        });
-    }
-}
-=======
+
                 ->pause(5000)
                 ->assertPathIs('/dashboard')
                 ->visit('/communities')
@@ -49,4 +36,3 @@ class CreateCommunityTest extends DuskTestCase
         });
     }
 }
->>>>>>> Stashed changes

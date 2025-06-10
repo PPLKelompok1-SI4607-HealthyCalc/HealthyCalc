@@ -20,19 +20,18 @@ class DeleteCommunityTest extends DuskTestCase
                 ->press('@login-button')
                 ->waitForLocation('/dashboard', 10)
                 ->assertPathIs('/dashboard')
-<<<<<<< Updated upstream
+
                 ->visit('/communities/1')
-=======
+
                 ->visit('/communities/10')
->>>>>>> Stashed changes
+
                 ->click('.bi-trash') 
                 ->waitForLocation('/communities', 10)
                 ->assertPathIs('/communities')
                 ->assertDontSee('Diet Bro');
         });
     }
-<<<<<<< Updated upstream
+
 }
-=======
-}
->>>>>>> Stashed changes
+
+
