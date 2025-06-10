@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
 use App\Models\Activity;
 use App\Models\Dashboard;
+use App\Models\TabooFood;
 use App\Models\UserProfile;
+use App\Models\FoodPlanning;
 use App\Models\IntakeHistory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreDashboardRequest;
 use App\Http\Requests\UpdateDashboardRequest;
@@ -71,8 +75,18 @@ class DashboardController extends Controller
         $proteinProgress = $targetProtein ? min(100, round(($weeklyProtein / $targetProtein) * 100, 2)) : 0;
         $carbsProgress = $targetCarbs ? min(100, round(($weeklyCarbs / $targetCarbs) * 100, 2)) : 0;
         $fatProgress = $targetFat ? min(100, round(($weeklyFat / $targetFat) * 100, 2)) : 0;
+
+        $tabooFoods = TabooFood::with('user')->where('user_id', auth()->id())->get();
+        // Mengelompokkan dan menghitung jumlah masing-masing kategori taboo
+        $tabooCounts = TabooFood::select('taboo', DB::raw('count(*) as total'))
+            ->where('user_id', auth()->id())
+            ->groupBy('taboo')
+            ->pluck('total', 'taboo'); 
+
+        $foodPlannings = FoodPlanning::with('user')->where('user_id', auth()->id())->latest()->get();
+        return view('dashboard', compact('foodPlannings','tabooFoods', 'tabooCounts','user', 'activities', 'weeklyCaloriesi', 'weeklyActivities', 'weeklyMinutes', 'caloriesProgress', 'minutesProgress', 'activitiesProgress', 'intakeHistories', 'weeklyCalories','caloriesProgressi', 'weeklyProtein', 'proteinProgress', 'weeklyCarbs', 'carbsProgress', 'weeklyFat', 'fatProgress', 'targetCalories', 'targetCaloriesi', 'targetProtein', 'targetCarbs', 'targetFat', 'tabooFoods', 'foodPlannings'));
+    
         
-        return view('dashboard', compact('user', 'activities', 'weeklyCaloriesi', 'weeklyActivities', 'weeklyMinutes', 'caloriesProgress', 'minutesProgress', 'activitiesProgress', 'intakeHistories', 'weeklyCalories','caloriesProgressi', 'weeklyProtein', 'proteinProgress', 'weeklyCarbs', 'carbsProgress', 'weeklyFat', 'fatProgress', 'targetCalories', 'targetCaloriesi', 'targetProtein', 'targetCarbs', 'targetFat'));
     }
 
     /**

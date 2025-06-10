@@ -86,6 +86,18 @@
                                                                 <li>
                                                                     <form
                                                                         action="{{ route('suplemens.destroy', $suplemen->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button
+                                                                            class="dropdown-item d-flex align-items-center text-danger"
+                                                                            type="submit">
+                                                                            <i class="bi bi-trash me-2"></i> Hapus
+                                                                            </button>
+                                                                        </form>
+
+                                                                    {{-- <form
+                                                                        action="{{ route('suplemens.destroy', $suplemen->id) }}"
                                                                         method="POST"
                                                                         onsubmit="return confirm('Yakin ingin menghapus suplemen ini?')">
                                                                         @csrf
@@ -95,7 +107,7 @@
                                                                             type="submit">
                                                                             <i class="bi bi-trash me-2"></i> Hapus
                                                                         </button>
-                                                                    </form>
+                                                                    </form> --}}
                                                                 </li>
                                                                 <li>
                                                                     <form

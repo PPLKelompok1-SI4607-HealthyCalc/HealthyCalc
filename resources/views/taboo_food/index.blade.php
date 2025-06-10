@@ -11,7 +11,7 @@
                     <input type="text" class="form-control" id="searchInput" placeholder="Cari Makanan Pantangan">
                 </div>
                 <div class="p-0 flex-grow-1 align-self-center">
-                    <p class="m-0 py-2 text-center bg-success text-white  rounded-3" data-bs-toggle="modal"
+                    <p dusk="create-taboo-food-button" class="bg-success text-white rounded-3" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">+ Tambah Makanan Pantangan</p>
                 </div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -99,7 +99,7 @@
                                     <div class="ms-auto">
                                         <!-- Tombol Edit -->
                                         <div class="p-1">
-                                            <button type="button" class="btn " data-bs-toggle="modal"
+                                            <button dusk="edit-taboo-food-button" type="button" class="btn " data-bs-toggle="modal"
                                                 data-bs-target="#editTabooFoodModal-{{ $tabooFood->id }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>

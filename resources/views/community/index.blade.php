@@ -62,10 +62,15 @@
                                         placeholder="Cari Aktivitas" aria-label="Search">
                                 </div>
                                 <div class="p-0 flex-grow-1 align-self-center">
+<<<<<<< Updated upstream
                                     <p class="m-0 py-2 text-center bg-success text-white rounded-3"
                                        data-bs-toggle="modal"
                                        data-bs-target="#exampleModal"
                                        dusk="create-post-button">Buat Postingan Baru</p>
+=======
+                                    <p dusk="create-community-button" class="m-0 py-2 text-center bg-success text-white  rounded-3" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">+ Buat Postingan Baru</p>
+>>>>>>> Stashed changes
                                 </div>
 
                                 {{-- Modal Create --}}

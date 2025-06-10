@@ -39,6 +39,12 @@ class TabooFoodController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['user_id'] = auth()->id();
+        $existingFood = TabooFood::where('user_id', $validatedData['user_id'])
+            ->where('food_name', $validatedData['food_name'])
+            ->first();
+        if ($existingFood) {
+            return redirect()->back()->withErrors(['food_name' => 'Pantangan makanan sudah ada dalam daftar pantangan.']);
+        }
         TabooFood::create($validatedData);
         return redirect()->route('taboo-foods.index')->with('success', 'Taboo food created successfully.');
     }

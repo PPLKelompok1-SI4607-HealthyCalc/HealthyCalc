@@ -22,6 +22,7 @@ class EditCommunityTest extends DuskTestCase
                 ->pause(2000) 
                 ->press('@login-button')
                 ->assertPathIs('/dashboard')
+<<<<<<< Updated upstream
                 ->visit('/communities/1')
                 ->click('.bi-pencil-square')
                 ->pause(2000)
@@ -34,3 +35,17 @@ class EditCommunityTest extends DuskTestCase
         });
     }
 }
+=======
+                ->visit('/communities/11')
+                ->click('.bi.bi-pencil-square')
+                ->pause(2000)
+                ->waitFor('form[action*="/communities/11"]', 10)
+                ->type('title', 'Diet tapi males')
+                ->type('description', 'DIET itu penting untuk kesehatan tubuh')
+                ->select('category', 'Umum')
+                ->press('Ubah')
+                ->assertSee('Diet tapi males');
+        });
+    }
+}
+>>>>>>> Stashed changes

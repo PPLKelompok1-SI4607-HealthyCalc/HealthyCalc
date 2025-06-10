@@ -41,10 +41,12 @@
                         <!-- Button Edit -->
 
                         <div class="ms-auto">
-                            <button type="button" class="btn " data-bs-toggle="modal"
+                            <button dusk="edit-food-planning-button-{{ $foodPlanning->id }}" type="button" class="btn btn-link p-0 m-0 text-primary text-decoration-none"
+                                data-bs-toggle="modal"
                                 data-bs-target="#editFoodPlanningModal-{{ $foodPlanning->id }}">
-                                <i class="bi bi-pencil-square"></i>
+                                Edit
                             </button>
+
                         </div>
 
                         <!-- Modal Edit -->

@@ -100,8 +100,10 @@
                                 aria-label="Search" aria-describedby="basic-addon1">
                         </div>
                         <div class="p-0 flex-grow-1 align-self-center">
-                            <p class="m-0 py-2 text-center bg-success text-white  rounded-3" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">+ Tambah Aktivitas</p>
+                            <p dusk="create-activity-button" class="m-0 py-2 text-center bg-success text-white rounded-3"
+                               data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                + Tambah Aktivitas
+                            </p>
                         </div>
                         {{-- Modal Tambah --}}
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -191,7 +193,7 @@
                                                 <p class="m-0 text-secondary-emphasis">{{ $activity->activity_date }}</p>
                                             </div>
                                             <div class="ms-auto d-flex align-items-center me-2">
-                                                <button class="btn btn-link text-dark p-0 m-0" type="button"
+                                                <button dusk="edit-activity-button-{{ $activity->id }}" class="btn btn-link text-dark p-0 m-0" type="button"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editactivityModal-{{ $activity->id }}">
                                                     <i class="bi bi-pencil-square me-2"></i>

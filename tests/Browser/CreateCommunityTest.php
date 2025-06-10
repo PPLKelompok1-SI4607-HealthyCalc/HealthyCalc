@@ -21,6 +21,7 @@ class CreateCommunityTest extends DuskTestCase
                 ->type('email', 'testuser@example.com')
                 ->type('password', 'testing123')
                 ->press('@login-button')
+<<<<<<< Updated upstream
                 ->assertPathIs('/dashboard')
                 ->visit('/communities')
                 ->click('@create-post-button')
@@ -33,3 +34,19 @@ class CreateCommunityTest extends DuskTestCase
         });
     }
 }
+=======
+                ->pause(5000)
+                ->assertPathIs('/dashboard')
+                ->visit('/communities')
+                ->assertSee('Diet Bro');
+                // ->click('.p-0.flex-grow-1.align-self-center')
+                // ->pause(2000)
+                // ->select('category', 'Umum')
+                // ->type('title', 'Diet Bro')
+                // ->type('description', 'DIET itu penting untuk kesehatan tubuh')
+                // ->press('Posting')
+                // ->pause(2000);
+        });
+    }
+}
+>>>>>>> Stashed changes

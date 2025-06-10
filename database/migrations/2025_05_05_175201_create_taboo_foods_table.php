@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->enum('taboo',['alergi', 'kolesterol', 'diabetes', 'diet', 'gula', 'garam', 'lemak',]);
-            $table->string('food_name');
+            $table->string('food_name')->unique();
             $table->timestamps();
         });
     }
